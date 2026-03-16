@@ -1,8 +1,9 @@
+import { LucideIconData } from 'lucide-angular';
 
 export interface MenuItem {
   id: string;
   label: string;
-  icon: string;
+  icon: LucideIconData;
   path?: string;
   badge?: {
     count: number;
