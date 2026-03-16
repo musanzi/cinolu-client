@@ -4,11 +4,34 @@ import { AuthStore } from '@core/auth/auth.store';
 import { MentorProfileStore } from '../../../store/mentor-profile.store';
 import { CreateExperienceDto, IExpertise, IExperience, IMentorProfile } from '@shared/models';
 import { ToastrService } from '@core/services/toast/toastr.service';
-import { IconComponent } from '@shared/ui';
+import {
+  LucideAngularModule,
+  LucideIconData,
+  Badge,
+  SquarePen,
+  BriefcaseBusiness,
+  Brain,
+  CircleCheckBig,
+  SearchCheck,
+  BookOpenText,
+  Plus,
+  Trash2,
+  FileText,
+  Eye,
+  RefreshCw,
+  FileUp,
+  X,
+  Save,
+  CircleAlert,
+  BadgeCheck,
+  Clock3,
+  CircleX,
+  Info
+} from 'lucide-angular';
 
 @Component({
   selector: 'app-mentor-profile',
-  imports: [ReactiveFormsModule, IconComponent],
+  imports: [ReactiveFormsModule, LucideAngularModule],
   templateUrl: './mentor-profile.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -21,6 +44,25 @@ export class MentorProfile implements OnInit {
 
   isEditMode = signal(false);
   selectedExpertises = signal<string[]>([]);
+
+  readonly icons = {
+    badge: Badge,
+    edit: SquarePen,
+    work: BriefcaseBusiness,
+    psychology: Brain,
+    checkCircle: CircleCheckBig,
+    manageSearch: SearchCheck,
+    historyEdu: BookOpenText,
+    add: Plus,
+    delete: Trash2,
+    description: FileText,
+    visibility: Eye,
+    sync: RefreshCw,
+    uploadFile: FileUp,
+    close: X,
+    save: Save,
+    error: CircleAlert
+  };
 
   selectedExpertiseObjects = computed(() => {
     const ids = this.selectedExpertises();
@@ -298,19 +340,19 @@ export class MentorProfile implements OnInit {
     }
   }
 
-  getStatusIcon(): string {
+  getStatusIcon(): LucideIconData {
     const profile = this.profileStore.profile();
-    if (!profile) return '';
+    if (!profile) return Info;
 
     switch (profile.status) {
       case 'approved':
-        return 'verified';
+        return BadgeCheck;
       case 'pending':
-        return 'schedule';
+        return Clock3;
       case 'rejected':
-        return 'cancel';
+        return CircleX;
       default:
-        return 'info';
+        return Info;
     }
   }
 }

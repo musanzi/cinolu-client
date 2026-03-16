@@ -16,8 +16,8 @@
         <div class="flex items-center justify-between flex-wrap gap-4">
           <div class="flex items-center gap-4">
             <div
-              class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-lg">
-              <ui-icon class="text-white text-3xl" name="badge" />
+              class="w-14 h-14 rounded-xl bg-linear-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-lg">
+              <i-lucide [name]="icons.badge" class="w-7 h-7 text-white" />
             </div>
             <div>
               <h1 class="dashboard-heading-3">Mon Profil Mentor</h1>
@@ -27,13 +27,13 @@
 
           <div class="flex items-center gap-3">
             <span [class]="getStatusBadgeClass()">
-              <ui-icon class="text-sm" [name]="getStatusIcon()" />
+              <i-lucide [name]="getStatusIcon()" class="w-3.5 h-3.5" />
               {{ getStatusLabel() }}
             </span>
 
             @if (!isEditMode()) {
             <button type="button" (click)="enableEditMode()" class="dashboard-btn-primary">
-              <ui-icon class="text-sm" name="edit" />
+              <i-lucide [name]="icons.edit" class="w-3.5 h-3.5" />
               Modifier
             </button>
             }
@@ -46,8 +46,8 @@
       <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
         <div id="mentor-cv-section" class="dashboard-card p-6 mb-6">
           <div class="flex items-center gap-3 mb-6">
-            <div class="dashboard-stat-icon bg-gradient-to-br from-blue-500 to-indigo-600">
-              <ui-icon class="text-white text-xl" name="work" />
+            <div class="dashboard-stat-icon bg-linear-to-br from-blue-500 to-indigo-600">
+              <i-lucide [name]="icons.work" class="w-5 h-5 text-white" />
             </div>
             <div>
               <h2 class="dashboard-heading-4">Expérience professionnelle</h2>
@@ -75,8 +75,8 @@
 
         <div class="dashboard-card p-6 mb-6">
           <div class="flex items-center gap-3 mb-6">
-            <div class="dashboard-stat-icon bg-gradient-to-br from-emerald-500 to-teal-600">
-              <ui-icon class="text-white text-xl" name="psychology" />
+            <div class="dashboard-stat-icon bg-linear-to-br from-emerald-500 to-teal-600">
+              <i-lucide [name]="icons.psychology" class="w-5 h-5 text-white" />
             </div>
             <div>
               <h2 class="dashboard-heading-4">Domaines d'expertise</h2>
@@ -89,7 +89,7 @@
             @for (expertise of selectedExpertiseObjects(); track expertise.id) {
             <span
               class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-50 border border-primary-200 text-primary-700 text-sm font-medium">
-              <ui-icon class="text-xs text-primary-500" name="check_circle" />
+              <i-lucide [name]="icons.checkCircle" class="w-3 h-3 text-primary-500" />
               {{ expertise.name }}
             </span>
             }
@@ -99,7 +99,7 @@
           } } @else {
           <div class="space-y-3">
             <label for="expertisesSelect" class="dashboard-label flex items-center gap-2">
-              <ui-icon class="text-base text-primary-600" name="manage_search" />
+              <i-lucide [name]="icons.manageSearch" class="w-4 h-4 text-primary-600" />
               <span>Sélectionner vos domaines</span>
             </label>
             <select
@@ -108,7 +108,9 @@
               (change)="onExpertisesChange($event)"
               class="min-h-36 w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition hover:border-primary-300 focus:border-primary-400 focus:ring-4 focus:ring-primary-100">
               @for (expertise of profileStore.expertises(); track expertise.id) {
-              <option [value]="expertise.id" [selected]="isExpertiseSelected(expertise.id)">{{ expertise.name }}</option>
+              <option [value]="expertise.id" [selected]="isExpertiseSelected(expertise.id)">
+                {{ expertise.name }}
+              </option>
               }
             </select>
             <p class="dashboard-text-tiny text-slate-500">
@@ -121,8 +123,8 @@
         <div class="dashboard-card p-6 mb-6">
           <div class="flex items-center justify-between mb-6">
             <div class="flex items-center gap-3">
-              <div class="dashboard-stat-icon bg-gradient-to-br from-amber-500 to-orange-600">
-                <ui-icon class="text-white text-xl" name="history_edu" />
+              <div class="dashboard-stat-icon bg-linear-to-br from-amber-500 to-orange-600">
+                <i-lucide [name]="icons.historyEdu" class="w-5 h-5 text-white" />
               </div>
               <div>
                 <h2 class="dashboard-heading-4">Parcours professionnel</h2>
@@ -132,7 +134,7 @@
 
             @if (isEditMode()) {
             <button type="button" (click)="addExperience()" class="dashboard-btn-primary">
-              <ui-icon class="text-sm" name="add" />
+              <i-lucide [name]="icons.add" class="w-3.5 h-3.5" />
               Ajouter une expérience
             </button>
             }
@@ -145,7 +147,7 @@
                 <h3 class="dashboard-heading-5 text-slate-800">Expérience {{ i + 1 }}</h3>
                 @if (isEditMode()) {
                 <button type="button" (click)="removeExperience(i)" class="dashboard-btn-danger">
-                  <ui-icon name="delete" />
+                  <i-lucide [name]="icons.delete" class="w-4 h-4" />
                 </button>
                 }
               </div>
@@ -205,13 +207,13 @@
             } @empty {
             <div class="p-8 text-center">
               <div
-                class="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center mb-4">
-                <ui-icon class="text-slate-400 text-3xl" name="work_outline" />
+                class="w-16 h-16 mx-auto rounded-2xl bg-linear-to-br from-slate-100 to-slate-200 flex items-center justify-center mb-4">
+                <i-lucide [name]="icons.work" class="w-7 h-7 text-slate-400" />
               </div>
               <p class="dashboard-text-body">Aucune expérience ajoutée</p>
               @if (isEditMode()) {
               <button type="button" (click)="addExperience()" class="dashboard-btn-primary mt-4">
-                <ui-icon class="text-sm" name="add" />
+                <i-lucide [name]="icons.add" class="w-3.5 h-3.5" />
                 Ajouter votre première expérience
               </button>
               }
@@ -222,8 +224,8 @@
 
         <div id="mentor-upload-cv-section" class="dashboard-card p-6 mb-6">
           <div class="flex items-center gap-3 mb-6">
-            <div class="dashboard-stat-icon bg-gradient-to-br from-purple-500 to-pink-600">
-              <ui-icon class="text-white text-xl" name="description" />
+            <div class="dashboard-stat-icon bg-linear-to-br from-purple-500 to-pink-600">
+              <i-lucide [name]="icons.description" class="w-5 h-5 text-white" />
             </div>
             <div>
               <h2 class="dashboard-heading-4">Curriculum Vitae</h2>
@@ -235,14 +237,14 @@
             @if (profile.cv) {
             <div class="flex items-center justify-between p-4 bg-primary-50 border-2 border-primary-200 rounded-lg">
               <div class="flex items-center gap-3">
-                <ui-icon class="text-primary-500 text-2xl" name="check_circle" />
+                <i-lucide [name]="icons.checkCircle" class="w-6 h-6 text-primary-500" />
                 <div>
                   <p class="font-semibold text-primary-700">CV téléchargé</p>
                   <p class="text-sm text-primary-500">Votre CV est disponible</p>
                 </div>
               </div>
               <a [href]="profileStore.cvUrl()" target="_blank" class="dashboard-btn-outline text-sm">
-                <ui-icon class="text-sm" name="visibility" />
+                <i-lucide [name]="icons.visibility" class="w-3.5 h-3.5" />
                 Voir
               </a>
             </div>
@@ -255,10 +257,10 @@
                 [disabled]="profileStore.isUploadingCV()"
                 class="w-full dashboard-btn-outline py-3">
                 @if (profileStore.isUploadingCV()) {
-                <ui-icon class="text-sm animate-spin" name="sync" />
+                <i-lucide [name]="icons.sync" class="w-3.5 h-3.5 animate-spin" />
                 <span>Téléchargement en cours...</span>
                 } @else {
-                <ui-icon class="text-sm" name="upload_file" />
+                <i-lucide [name]="icons.uploadFile" class="w-3.5 h-3.5" />
                 <span>{{ profile?.cv ? 'Remplacer le CV' : 'Télécharger le CV' }}</span>
                 }
               </button>
@@ -270,7 +272,7 @@
         @if (isEditMode()) {
         <div class="flex items-center justify-end gap-3">
           <button type="button" (click)="cancelEdit()" class="dashboard-btn-outline">
-            <ui-icon class="text-sm" name="close" />
+            <i-lucide [name]="icons.close" class="w-3.5 h-3.5" />
             Annuler
           </button>
           <button
@@ -278,10 +280,10 @@
             [disabled]="profileStore.isLoading() || profileForm.invalid"
             class="dashboard-btn-primary">
             @if (profileStore.isLoading()) {
-            <ui-icon class="text-sm animate-spin" name="sync" />
+            <i-lucide [name]="icons.sync" class="w-3.5 h-3.5 animate-spin" />
             <span>Enregistrement...</span>
             } @else {
-            <ui-icon class="text-sm" name="save" />
+            <i-lucide [name]="icons.save" class="w-3.5 h-3.5" />
             <span>Enregistrer</span>
             }
           </button>
@@ -293,13 +295,13 @@
   } @else {
   <div class="flex flex-col items-center justify-center py-24">
     <div
-      class="w-20 h-20 rounded-2xl bg-gradient-to-br from-red-100 to-red-200 flex items-center justify-center shadow-lg mb-4">
-      <ui-icon class="text-red-500 text-4xl" name="error" />
+      class="w-20 h-20 rounded-2xl bg-linear-to-br from-red-100 to-red-200 flex items-center justify-center shadow-lg mb-4">
+      <i-lucide [name]="icons.error" class="w-9 h-9 text-red-500" />
     </div>
     <h3 class="dashboard-heading-4 mb-2">Profil non trouvé</h3>
     <p class="dashboard-text-body text-center max-w-md mb-6">Nous n'avons pas pu charger votre profil mentor</p>
     <button (click)="ngOnInit()" class="dashboard-btn-primary">
-      <ui-icon class="text-sm" name="refresh" />
+      <i-lucide [name]="icons.sync" class="w-3.5 h-3.5" />
       Réessayer
     </button>
   </div>
