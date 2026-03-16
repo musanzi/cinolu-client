@@ -14,17 +14,40 @@ import { RouterLink } from '@angular/router';
 import { AuthStore } from '@core/auth/auth.store';
 import { RightsService } from '@core/auth/rights.service';
 import { ApiImgPipe } from '@shared/pipes';
-import { IconComponent } from '@shared/ui';
+import {
+  LucideAngularModule,
+  Menu,
+  Clock3,
+  LayoutDashboard,
+  KeyRound,
+  CircleQuestionMark,
+  ChevronDown,
+  BadgeCheck,
+  Badge,
+  LogOut
+} from 'lucide-angular';
 
 @Component({
   selector: 'app-mentor-dashboard-header',
-  imports: [NgClass, NgOptimizedImage, ApiImgPipe, RouterLink, IconComponent],
+  imports: [NgClass, NgOptimizedImage, ApiImgPipe, RouterLink, LucideAngularModule],
   templateUrl: './mentor-dashboard-header.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MentorDashboardHeader implements OnDestroy {
   private authStore = inject(AuthStore);
   private rightsService = inject(RightsService);
+
+  readonly icons = {
+    menu: Menu,
+    clock: Clock3,
+    dashboard: LayoutDashboard,
+    key: KeyRound,
+    help: CircleQuestionMark,
+    chevronDown: ChevronDown,
+    verified: BadgeCheck,
+    badge: Badge,
+    logout: LogOut
+  };
 
   isMobile = input<boolean>(false);
 
