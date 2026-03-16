@@ -1,8 +1,8 @@
-<div class="dashboard-card p-5 sm:p-6 bg-gradient-to-br from-primary-50/80 to-white">
+<div class="dashboard-card p-5 sm:p-6 bg-linear-to-br from-primary-50/80 to-white">
   <div class="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-6">
     <div
-      class="w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 rounded-lg bg-gradient-to-br from-primary-500/90 to-primary-700/85 flex items-center justify-center shadow-lg">
-      <ui-icon class="text-white text-2xl sm:text-3xl" name="rocket_launch" />
+      class="w-14 h-14 sm:w-16 sm:h-16 shrink-0 rounded-lg bg-linear-to-br from-primary-500/90 to-primary-700/85 flex items-center justify-center shadow-lg">
+      <i-lucide [name]="icons.rocket" class="w-7 h-7 text-white" />
     </div>
     <div class="flex-1">
       <h4 class="dashboard-heading-4 sm:dashboard-heading-5 mb-2 sm:mb-3">Développe ton réseau</h4>
@@ -15,14 +15,14 @@
           routerLink="/dashboard/referral/link"
           class="dashboard-btn-primary inline-flex"
           aria-label="Partager mon lien de parrainage">
-          <ui-icon class="text-lg" name="share" />
+          <i-lucide [name]="icons.share" class="w-4 h-4" />
           <span>Partager mon lien</span>
         </a>
         <a
           routerLink="/dashboard/referral/badges"
           class="dashboard-btn-secondary inline-flex"
           aria-label="Consulter mes badges de parrainage">
-          <ui-icon class="text-lg" name="military_tech" />
+          <i-lucide [name]="icons.award" class="w-4 h-4" />
           <span>Voir mes badges</span>
         </a>
       </div>
