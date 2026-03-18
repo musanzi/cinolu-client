@@ -44,6 +44,8 @@ export class MentorProfile implements OnInit {
 
   isEditMode = signal(false);
   selectedExpertises = signal<string[]>([]);
+  expertiseFilter = signal('');
+  isExpertiseDropdownOpen = signal(false);
 
   readonly icons = {
     badge: Badge,
@@ -67,6 +69,13 @@ export class MentorProfile implements OnInit {
   selectedExpertiseObjects = computed(() => {
     const ids = this.selectedExpertises();
     return this.profileStore.expertises().filter((e) => ids.includes(e.id));
+  });
+
+  filteredExpertises = computed(() => {
+    const term = this.normalizeSearch(this.expertiseFilter());
+    if (!term) return this.profileStore.expertises();
+
+    return this.profileStore.expertises().filter((expertise) => this.normalizeSearch(expertise.name).includes(term));
   });
 
   profileForm = this.fb.group({
@@ -204,6 +213,30 @@ export class MentorProfile implements OnInit {
       // Si ce n'est plus le poste actuel, réactiver le champ
       endDateControl?.enable();
     }
+  }
+
+  updateExpertiseFilter(event: Event): void {
+    const value = (event.target as HTMLInputElement).value || '';
+    this.expertiseFilter.set(value);
+  }
+
+  toggleExpertiseDropdown(): void {
+    this.isExpertiseDropdownOpen.update((isOpen) => !isOpen);
+  }
+
+  closeExpertiseDropdown(): void {
+    this.isExpertiseDropdownOpen.set(false);
+  }
+
+  clearExpertiseFilter(): void {
+    this.expertiseFilter.set('');
+  }
+
+  private normalizeSearch(value: string): string {
+    return value
+      .toLocaleLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
   }
 
   enableEditMode(): void {
