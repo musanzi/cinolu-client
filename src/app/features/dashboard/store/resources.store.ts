@@ -20,7 +20,6 @@ interface IResourcesStore {
   // Filtres
   currentPage: number;
   filterCategory: ResourceCategory | null;
-  filterTags: string;
   projectIdScope: string | null; // pour filtrer par projet
 
   // États UI
@@ -40,7 +39,6 @@ export const ResourcesStore = signalStore(
     selectedResource: null,
     currentPage: 1,
     filterCategory: null,
-    filterTags: '',
     projectIdScope: null,
     isLoading: false,
     isLoadingDetail: false,
@@ -232,10 +230,9 @@ export const ResourcesStore = signalStore(
       selectResource: (resource: IResource | null) => {
         patchState(store, { selectedResource: resource });
       },
-      setFilter: (category: ResourceCategory | null, tags: string) => {
+      setFilter: (category: ResourceCategory | null) => {
         patchState(store, {
           filterCategory: category,
-          filterTags: tags,
           resources: [],
           currentPage: 1
         });
@@ -247,7 +244,6 @@ export const ResourcesStore = signalStore(
           selectedResource: null,
           currentPage: 1,
           filterCategory: null,
-          filterTags: '',
           projectIdScope: null,
           error: null
         });

@@ -16,7 +16,6 @@ export class ResourcesService {
     if (filter.page) params = params.set('page', String(filter.page));
     if (filter.limit) params = params.set('limit', String(filter.limit));
     if (filter.category) params = params.set('category', filter.category);
-    if (filter.tags) params = params.set('tags', filter.tags);
 
     return this._http
       .get<{ data: [IResource[], number] }>(`resources/project/${projectId}`, { params })
@@ -28,7 +27,6 @@ export class ResourcesService {
     if (filter.page) params = params.set('page', String(filter.page));
     if (filter.limit) params = params.set('limit', String(filter.limit));
     if (filter.category) params = params.set('category', filter.category);
-    if (filter.tags) params = params.set('tags', filter.tags);
 
     return this._http
       .get<{ data: [IResource[], number] }>(`resources/phase/${phaseId}`, { params })
@@ -41,11 +39,8 @@ export class ResourcesService {
     formData.append('title', dto.title);
     formData.append('description', dto.description);
     formData.append('category', dto.category);
-    if (dto.projectId) formData.append('projectId', dto.projectId);
-    if (dto.phaseId) formData.append('phaseId', dto.phaseId);
-    if (dto.tags && dto.tags.length > 0) {
-      dto.tags.forEach((tag) => formData.append('tags', tag));
-    }
+    if (dto.projectId) formData.append('project_id', dto.projectId);
+    if (dto.phaseId) formData.append('phase_id', dto.phaseId);
 
     return this._http.post<{ data: IResource }>('resources', formData).pipe(map((res) => res.data));
   }

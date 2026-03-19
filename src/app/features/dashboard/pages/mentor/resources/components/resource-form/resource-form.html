@@ -88,45 +88,6 @@
     </div>
   }
 
-  <!-- Tags -->
-  <div>
-    <label for="tags-input" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
-      Tags
-    </label>
-    <div class="flex gap-2 mb-2">
-      <input
-        id="tags-input"
-        type="text"
-        [value]="tagsInput()"
-        (input)="tagsInput.set($any($event.target).value)"
-        (keydown.enter)="$event.preventDefault(); addTag()"
-        placeholder="Ajoutez un tag et appuyez sur Entrée"
-        class="flex-1 px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors" />
-      <button
-        type="button"
-        (click)="addTag()"
-        class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 text-sm font-medium rounded-lg transition-colors">
-        Ajouter
-      </button>
-    </div>
-    @if (tagsList().length > 0) {
-      <div class="flex flex-wrap gap-2">
-        @for (tag of tagsList(); track tag) {
-          <span
-            class="inline-flex items-center gap-1.5 rounded-full bg-primary-100 dark:bg-primary-900 px-3 py-1 text-sm font-medium text-primary-800 dark:text-primary-200">
-            {{ tag }}
-            <button
-              type="button"
-              (click)="removeTag(tag)"
-              class="hover:text-primary-600 dark:hover:text-primary-400">
-              <i-lucide [name]="icons.close" [size]="14" />
-            </button>
-          </span>
-        }
-      </div>
-    }
-  </div>
-
   <!-- Actions -->
   <div class="flex gap-3 pt-4 border-t border-slate-200 dark:border-slate-700">
     <button

@@ -39,14 +39,13 @@ export class ResourcesList implements OnInit {
   onFilterChange(filter: ResourceFilterValue): void {
     const resourcesFilter: ResourcesFilter = {
       category: filter.category ?? undefined,
-      tags: filter.tags || undefined,
       page: 1
     };
     const projectId = this.resourcesStore.projectIdScope();
     if (projectId) {
       this.resourcesStore.loadResourcesByProject({ projectId, filter: resourcesFilter });
     }
-    this.resourcesStore.setFilter(filter.category, filter.tags);
+    this.resourcesStore.setFilter(filter.category);
   }
 
   onDownloadResource(resource: IResource): void {
@@ -82,7 +81,6 @@ export class ResourcesList implements OnInit {
       title: event.value.title,
       description: event.value.description,
       category: event.value.category,
-      tags: event.value.tags,
       projectId: event.value.projectId || undefined,
       phaseId: event.value.phaseId || undefined
     };
@@ -98,8 +96,7 @@ export class ResourcesList implements OnInit {
     const nextPage = this.resourcesStore.currentPage() + 1;
     const filter: ResourcesFilter = {
       page: nextPage,
-      category: this.resourcesStore.filterCategory() ?? undefined,
-      tags: this.resourcesStore.filterTags() || undefined
+      category: this.resourcesStore.filterCategory() ?? undefined
     };
 
     this.resourcesStore.loadResourcesByProject({ projectId, filter });

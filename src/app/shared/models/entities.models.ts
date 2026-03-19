@@ -321,7 +321,6 @@ export interface IResource extends IBase {
   description: string;
   file: string;
   category: ResourceCategory;
-  tags?: string[];
   project?: IProject;
   phase?: IPhase;
 }
@@ -330,14 +329,12 @@ export interface ResourcesFilter {
   page?: number;
   limit?: number;
   category?: ResourceCategory;
-  tags?: string;
 }
 
 export interface CreateResourceDto {
   title: string;
   description: string;
   category: ResourceCategory;
-  tags?: string[];
   projectId?: string;
   phaseId?: string;
 }
@@ -346,7 +343,6 @@ export interface UpdateResourceDto {
   title?: string;
   description?: string;
   category?: ResourceCategory;
-  tags?: string[];
   projectId?: string;
   phaseId?: string;
 }

@@ -13,7 +13,6 @@ import {
   Trash2,
   Calendar,
   FolderOpen,
-  Tag,
   LucideAngularModule
 } from 'lucide-angular';
 
@@ -35,8 +34,7 @@ export class ResourceDetail implements OnInit {
     edit: Edit,
     trash: Trash2,
     calendar: Calendar,
-    folder: FolderOpen,
-    tag: Tag
+    folder: FolderOpen
   };
 
   showEditModal = signal(false);
@@ -86,7 +84,6 @@ export class ResourceDetail implements OnInit {
       title: event.value.title,
       description: event.value.description,
       category: event.value.category,
-      tags: event.value.tags,
       projectId: event.value.projectId || undefined,
       phaseId: event.value.phaseId || undefined
     };
@@ -141,7 +138,6 @@ export class ResourceDetail implements OnInit {
       title: resource.title,
       description: resource.description,
       category: resource.category,
-      tags: resource.tags || [],
       projectId: resource.project?.id,
       phaseId: resource.phase?.id
     };

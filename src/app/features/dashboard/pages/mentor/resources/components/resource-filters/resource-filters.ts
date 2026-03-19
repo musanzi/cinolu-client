@@ -6,7 +6,6 @@ import { X, LucideAngularModule } from 'lucide-angular';
 
 export interface ResourceFilterValue {
   category: ResourceCategory | null;
-  tags: string;
 }
 
 @Component({
@@ -19,7 +18,6 @@ export class ResourceFilters {
   @Output() filterChange = new EventEmitter<ResourceFilterValue>();
 
   selectedCategory = signal<ResourceCategory | null>(null);
-  tagsInput = signal<string>('');
 
   readonly icons = {
     clear: X
@@ -40,21 +38,14 @@ export class ResourceFilters {
     this.emitFilter();
   }
 
-  onTagsChange(value: string): void {
-    this.tagsInput.set(value);
-    this.emitFilter();
-  }
-
   resetFilters(): void {
     this.selectedCategory.set(null);
-    this.tagsInput.set('');
     this.emitFilter();
   }
 
   private emitFilter(): void {
     this.filterChange.emit({
-      category: this.selectedCategory(),
-      tags: this.tagsInput()
+      category: this.selectedCategory()
     });
   }
 }

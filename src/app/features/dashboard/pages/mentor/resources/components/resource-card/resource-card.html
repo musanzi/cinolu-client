@@ -28,24 +28,6 @@
     {{ resource.description }}
   </p>
 
-  <!-- Tags -->
-  @if (resource.tags && resource.tags.length > 0) {
-    <div class="mb-4 flex flex-wrap gap-1.5">
-      @for (tag of resource.tags.slice(0, 3); track tag) {
-        <span
-          class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700 dark:bg-gray-700 dark:text-gray-300">
-          {{ tag }}
-        </span>
-      }
-      @if (resource.tags.length > 3) {
-        <span
-          class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-500 dark:bg-gray-700 dark:text-gray-400">
-          +{{ resource.tags.length - 3 }}
-        </span>
-      }
-    </div>
-  }
-
   <!-- Footer -->
   <div class="mt-auto flex items-center justify-between border-t border-gray-100 pt-4 dark:border-gray-700">
     <!-- Date -->

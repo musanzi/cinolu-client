@@ -17,7 +17,6 @@ export interface ResourceFormValue {
   title: string;
   description: string;
   category: ResourceCategory;
-  tags: string[];
   projectId?: string;
   phaseId?: string;
 }
@@ -40,8 +39,6 @@ export class ResourceForm implements OnInit {
   
   form!: FormGroup;
   selectedFile = signal<File | null>(null);
-  tagsInput = signal<string>('');
-  tagsList = signal<string[]>([]);
 
   readonly icons = {
     close: X,
@@ -66,10 +63,6 @@ export class ResourceForm implements OnInit {
       projectId: [this.initialValue?.projectId || ''],
       phaseId: [this.initialValue?.phaseId || '']
     });
-
-    if (this.initialValue?.tags) {
-      this.tagsList.set([...this.initialValue.tags]);
-    }
   }
 
   onFileSelected(event: Event): void {
@@ -77,18 +70,6 @@ export class ResourceForm implements OnInit {
     if (input.files && input.files[0]) {
       this.selectedFile.set(input.files[0]);
     }
-  }
-
-  addTag(): void {
-    const tag = this.tagsInput().trim();
-    if (tag && !this.tagsList().includes(tag)) {
-      this.tagsList.update((tags) => [...tags, tag]);
-      this.tagsInput.set('');
-    }
-  }
-
-  removeTag(tag: string): void {
-    this.tagsList.update((tags) => tags.filter((t) => t !== tag));
   }
 
   onSubmit(): void {
@@ -102,10 +83,7 @@ export class ResourceForm implements OnInit {
       return;
     }
 
-    const value: ResourceFormValue = {
-      ...this.form.value,
-      tags: this.tagsList()
-    };
+    const value: ResourceFormValue = this.form.value;
 
     this.submitForm.emit({
       value,

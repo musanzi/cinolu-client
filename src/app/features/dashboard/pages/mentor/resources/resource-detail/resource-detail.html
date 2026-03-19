@@ -35,24 +35,6 @@
             <p class="dashboard-text-body whitespace-pre-line">{{ resource.description }}</p>
           </div>
 
-          <!-- Tags -->
-          @if (resource.tags && resource.tags.length > 0) {
-            <div class="mb-6">
-              <h2 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 flex items-center gap-2">
-                <i-lucide [name]="icons.tag" [size]="16" />
-                Tags
-              </h2>
-              <div class="flex flex-wrap gap-2">
-                @for (tag of resource.tags; track tag) {
-                  <span
-                    class="inline-flex items-center rounded-full bg-slate-100 dark:bg-slate-700 px-3 py-1 text-sm font-medium text-slate-700 dark:text-slate-300">
-                    {{ tag }}
-                  </span>
-                }
-              </div>
-            </div>
-          }
-
           <!-- Project & Phase -->
           @if (resource.project || resource.phase) {
             <div class="border-t border-slate-200 dark:border-slate-700 pt-6">
