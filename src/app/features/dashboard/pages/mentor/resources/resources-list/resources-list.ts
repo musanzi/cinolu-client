@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ResourcesStore } from '@features/dashboard/store/resources.store';
 import { ResourcesService } from '@features/dashboard/services/resources.service';
+import { MentorshipService } from '@features/dashboard/services/mentorship.service';
 import { ResourceCard } from '../components/resource-card/resource-card';
 import { ResourceFilters, type ResourceFilterValue } from '../components/resource-filters/resource-filters';
 import { ResourceForm, ResourceFormValue } from '../components/resource-form/resource-form';
-import { IResource, ResourcesFilter, CreateResourceDto } from '@shared/models/entities.models';
+import { IResource, ResourcesFilter, CreateResourceDto, IProject } from '@shared/models/entities.models';
 import { FileText, Plus, FolderOpen, LucideAngularModule } from 'lucide-angular';
 
 @Component({
@@ -18,6 +19,7 @@ import { FileText, Plus, FolderOpen, LucideAngularModule } from 'lucide-angular'
 export class ResourcesList implements OnInit {
   resourcesStore = inject(ResourcesStore);
   private _resourcesService = inject(ResourcesService);
+  private _mentorshipService = inject(MentorshipService);
   private _router = inject(Router);
 
   readonly icons = {
@@ -28,24 +30,53 @@ export class ResourcesList implements OnInit {
 
   // Modal state for creating resource
   showCreateModal = signal(false);
+  mentoredProjects = signal<IProject[]>([]);
+  selectedProjectId = signal<string | null>(null);
 
   ngOnInit(): void {
-    // For now, load all resources without project scope
-    // TODO: In production, you might want to load resources from all mentored projects
-    // or allow the user to select a project first
+    // Load mentored projects first
+    this._mentorshipService.getMentoredProjects().subscribe({
+      next: (projects) => {
+        this.mentoredProjects.set(projects);
+        
+        // If there's at least one project, load its resources
+        if (projects.length > 0) {
+          const firstProject = projects[0];
+          this.selectedProjectId.set(firstProject.id);
+          this.loadResourcesForProject(firstProject.id);
+        }
+      },
+      error: (err) => {
+        console.error('Error loading mentored projects:', err);
+      }
+    });
+  }
+
+  private loadResourcesForProject(projectId: string): void {
+    const filter: ResourcesFilter = {
+      page: 1,
+      category: this.resourcesStore.filterCategory() ?? undefined
+    };
+    this.resourcesStore.loadResourcesByProject({ projectId, filter });
+  }
+
+  onProjectChange(projectId: string): void {
+    this.selectedProjectId.set(projectId);
     this.resourcesStore.clearResources();
+    this.loadResourcesForProject(projectId);
   }
 
   onFilterChange(filter: ResourceFilterValue): void {
+    const projectId = this.selectedProjectId();
+    if (!projectId) return;
+
     const resourcesFilter: ResourcesFilter = {
       category: filter.category ?? undefined,
       page: 1
     };
-    const projectId = this.resourcesStore.projectIdScope();
-    if (projectId) {
-      this.resourcesStore.loadResourcesByProject({ projectId, filter: resourcesFilter });
-    }
+    
     this.resourcesStore.setFilter(filter.category);
+    this.resourcesStore.loadResourcesByProject({ projectId, filter: resourcesFilter });
   }
 
   onDownloadResource(resource: IResource): void {
@@ -77,11 +108,12 @@ export class ResourcesList implements OnInit {
       return;
     }
 
+    const projectId = this.selectedProjectId();
     const dto: CreateResourceDto = {
       title: event.value.title,
       description: event.value.description,
       category: event.value.category,
-      projectId: event.value.projectId || undefined,
+      projectId: event.value.projectId || projectId || undefined,
       phaseId: event.value.phaseId || undefined
     };
 
@@ -90,7 +122,7 @@ export class ResourcesList implements OnInit {
   }
 
   loadMore(): void {
-    const projectId = this.resourcesStore.projectIdScope();
+    const projectId = this.selectedProjectId();
     if (!projectId) return;
 
     const nextPage = this.resourcesStore.currentPage() + 1;
