@@ -43,7 +43,6 @@ export const MentorshipStore = signalStore(
     hasMoreParticipations: computed(() => participations().length < totalParticipations())
   })),
   withMethods(({ _service, _toast, ...store }) => ({
-
     loadMentoredProjects: rxMethod<void>(
       pipe(
         tap(() => patchState(store, { isLoading: true })),
@@ -75,8 +74,8 @@ export const MentorshipStore = signalStore(
             filterPhaseId: ''
           })
         ),
-        switchMap((projectId) =>
-          _service.getMentoredProject(projectId).pipe(
+        switchMap((projectSlug) =>
+          _service.getMentoredProject(projectSlug).pipe(
             tap((project) => {
               patchState(store, { selectedProject: project, isLoading: false });
             }),
@@ -116,11 +115,11 @@ export const MentorshipStore = signalStore(
       )
     ),
 
-    loadParticipationDetail: rxMethod<{ projectId: string; participationId: string }>(
+    loadParticipationDetail: rxMethod<{  participationId: string }>(
       pipe(
         tap(() => patchState(store, { isLoadingDetail: true, selectedParticipation: null })),
-        switchMap(({ projectId, participationId }) =>
-          _service.getMentoredProjectParticipation(projectId, participationId).pipe(
+        switchMap(({ participationId }) =>
+          _service.getMentoredProjectParticipation(participationId).pipe(
             tap((participation) => {
               patchState(store, { selectedParticipation: participation, isLoadingDetail: false });
             }),

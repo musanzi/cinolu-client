@@ -17,12 +17,9 @@ interface IResourcesStore {
   totalResources: number;
   selectedResource: IResource | null;
 
-  // Filtres
   currentPage: number;
   filterCategory: ResourceCategory | null;
-  projectIdScope: string | null; // pour filtrer par projet
-
-  // États UI
+  projectIdScope: string | null;
   isLoading: boolean;
   isLoadingDetail: boolean;
   isCreating: boolean;
@@ -57,9 +54,6 @@ export const ResourcesStore = signalStore(
     const toast = inject(ToastrService);
 
     return {
-      /**
-       * Load resources by project with filters
-       */
       loadResourcesByProject: rxMethod<{ projectId: string; filter?: ResourcesFilter }>(
         pipe(
           tap(() => patchState(store, { isLoading: true, error: null })),
@@ -73,7 +67,6 @@ export const ResourcesStore = signalStore(
 
             return service.getResourcesByProject(projectId, finalFilter).pipe(
               tap(([resources, total]) => {
-                // Append if loading next page, replace otherwise
                 const existing = page > 1 ? store.resources() : [];
                 patchState(store, {
                   resources: [...existing, ...resources],
@@ -93,9 +86,6 @@ export const ResourcesStore = signalStore(
         )
       ),
 
-      /**
-       * Load resources by phase with filters
-       */
       loadResourcesByPhase: rxMethod<{ phaseId: string; filter?: ResourcesFilter }>(
         pipe(
           tap(() => patchState(store, { isLoading: true, error: null })),
@@ -127,7 +117,6 @@ export const ResourcesStore = signalStore(
         )
       ),
 
-  
       createResource: rxMethod<{ dto: CreateResourceDto; file: File }>(
         pipe(
           tap(() => patchState(store, { isCreating: true, error: null })),
@@ -151,7 +140,6 @@ export const ResourcesStore = signalStore(
         )
       ),
 
-
       updateResource: rxMethod<{ id: string; dto: UpdateResourceDto }>(
         pipe(
           tap(() => patchState(store, { isUpdating: true, error: null })),
@@ -161,8 +149,7 @@ export const ResourcesStore = signalStore(
                 const updated = store.resources().map((r: IResource) => (r.id === id ? updatedResource : r));
                 patchState(store, {
                   resources: updated,
-                  selectedResource:
-                    store.selectedResource()?.id === id ? updatedResource : store.selectedResource(),
+                  selectedResource: store.selectedResource()?.id === id ? updatedResource : store.selectedResource(),
                   isUpdating: false
                 });
                 toast.showSuccess('Ressource mise à jour');
@@ -185,8 +172,7 @@ export const ResourcesStore = signalStore(
                 const updated = store.resources().map((r: IResource) => (r.id === id ? updatedResource : r));
                 patchState(store, {
                   resources: updated,
-                  selectedResource:
-                    store.selectedResource()?.id === id ? updatedResource : store.selectedResource(),
+                  selectedResource: store.selectedResource()?.id === id ? updatedResource : store.selectedResource(),
                   isUpdating: false
                 });
                 toast.showSuccess('Fichier mis à jour');
@@ -225,7 +211,6 @@ export const ResourcesStore = signalStore(
           )
         )
       ),
-
 
       selectResource: (resource: IResource | null) => {
         patchState(store, { selectedResource: resource });
