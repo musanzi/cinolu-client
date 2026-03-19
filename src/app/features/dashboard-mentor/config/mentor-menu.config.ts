@@ -1,4 +1,4 @@
-import { LayoutDashboard, Badge, GraduationCap } from 'lucide-angular';
+import { LayoutDashboard, Badge, GraduationCap, FileText } from 'lucide-angular';
 import type { MenuItem, MenuSection } from '@features/dashboard/config/menu.config';
 
 const MENTOR_BASE = '/dashboard/mentor';
@@ -27,6 +27,13 @@ export const MENTOR_MENU_CONFIG: MenuSection[] = [
         icon: GraduationCap,
         path: MENTOR_BASE + '/mentored-projects',
         tooltip: 'Voir les projets dont je suis mentor'
+      },
+      {
+        id: 'mentor-resources',
+        label: 'Ressources',
+        icon: FileText,
+        path: MENTOR_BASE + '/resources',
+        tooltip: 'Accéder aux ressources des projets'
       }
     ]
   }

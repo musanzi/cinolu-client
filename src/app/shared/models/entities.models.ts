@@ -302,6 +302,61 @@ export interface MentorDashboardStats {
   averageRating: number;
 }
 
+// ============================================
+// RESOURCES
+// ============================================
+
+export enum ResourceCategory {
+  GUIDE = 'guide',
+  TEMPLATE = 'template',
+  LEGAL = 'legal',
+  PITCH = 'pitch',
+  FINANCIAL = 'financial',
+  REPORT = 'report',
+  OTHER = 'other'
+}
+
+export interface IResource extends IBase {
+  title: string;
+  description: string;
+  file: string;
+  category: ResourceCategory;
+  tags?: string[];
+  project?: IProject;
+  phase?: IPhase;
+}
+
+export interface ResourcesFilter {
+  page?: number;
+  limit?: number;
+  category?: ResourceCategory;
+  tags?: string;
+}
+
+export interface CreateResourceDto {
+  title: string;
+  description: string;
+  category: ResourceCategory;
+  tags?: string[];
+  projectId?: string;
+  phaseId?: string;
+}
+
+export interface UpdateResourceDto {
+  title?: string;
+  description?: string;
+  category?: ResourceCategory;
+  tags?: string[];
+  projectId?: string;
+  phaseId?: string;
+}
+
+export interface MentorDashboardStats2 {
+  activeMentees: number;
+  pendingRequests: number;
+  averageRating: number;
+}
+
 export interface IMentorActivity extends IBase {
   type: 'session' | 'request' | 'message' | 'review';
   message: string;

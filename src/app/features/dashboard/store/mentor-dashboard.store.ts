@@ -29,8 +29,8 @@ export const MentorDashboardStore = signalStore(
           totalSessions: 1,
           upcomingSessions: 3,
           completedSessions: 4,
-          totalMentees: 3,
           activeMentees: 1,
+          totalMentees: 3,
           pendingRequests: 2,
           averageRating: 4
         },
