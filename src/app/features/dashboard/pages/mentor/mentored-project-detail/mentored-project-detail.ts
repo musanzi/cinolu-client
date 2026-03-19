@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy, ChangeDetectionStrategy, signal, computed } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, ChangeDetectionStrategy, signal, computed, effect } from '@angular/core';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 import { CommonModule, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -19,9 +19,11 @@ import {
   UserX,
   Users
 } from 'lucide-angular';
+import { ProjectStore } from '@features/projects/store/project.store';
 
 @Component({
   selector: 'app-mentored-project-detail',
+  providers: [ProjectStore],
   imports: [RouterLink, NgClass, FormsModule, ApiImgPipe, CommonModule, LucideAngularModule],
   templateUrl: './mentored-project-detail.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -29,6 +31,7 @@ import {
 export class MentoredProjectDetail implements OnInit, OnDestroy {
   mentorshipStore = inject(MentorshipStore);
   private route = inject(ActivatedRoute);
+  projectStore = inject(ProjectStore);
 
   readonly icons = {
     arrowBack: ArrowLeft,
@@ -48,6 +51,19 @@ export class MentoredProjectDetail implements OnInit, OnDestroy {
   searchQuery = signal<string>('');
   selectedPhaseId = signal<string>('');
 
+  constructor() {
+    effect(
+      () => {
+        const project = this.mentorshipStore.selectedProject();
+        if (!project?.id || this.projectId() === project.id) return;
+
+        this.projectId.set(project.id);
+        this.mentorshipStore.loadParticipations({ projectId: project.id });
+      },
+      { allowSignalWrites: true }
+    );
+  }
+
   getProgress(completedCount: number, totalPhases: number): number {
     if (!totalPhases) return 0;
     return Math.round((completedCount / totalPhases) * 100);
@@ -60,10 +76,11 @@ export class MentoredProjectDetail implements OnInit, OnDestroy {
   });
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('projectId') ?? '';
-    this.projectId.set(id);
-    this.mentorshipStore.loadMentoredProject(id);
-    this.mentorshipStore.loadParticipations({ projectId: id });
+    const projectSlug = this.route.snapshot.paramMap.get('projectId') ?? '';
+    if (!projectSlug) return;
+
+    this.projectStore.loadProject(projectSlug);
+    this.mentorshipStore.loadMentoredProject(projectSlug);
   }
 
   ngOnDestroy(): void {
