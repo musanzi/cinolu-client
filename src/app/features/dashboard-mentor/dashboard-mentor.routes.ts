@@ -18,16 +18,13 @@ export const dashboardMentorRoutes: Routes = [
       {
         path: 'profile',
         title: 'Profil Mentor',
-        loadComponent: () =>
-          import('../dashboard/pages/mentor/profile/mentor-profile').then((c) => c.MentorProfile)
+        loadComponent: () => import('../dashboard/pages/mentor/profile/mentor-profile').then((c) => c.MentorProfile)
       },
       {
         path: 'mentored-projects',
         title: 'Projets mentorés',
         loadComponent: () =>
-          import('../dashboard/pages/mentor/mentored-projects/mentored-projects').then(
-            (c) => c.MentoredProjects
-          )
+          import('../dashboard/pages/mentor/mentored-projects/mentored-projects').then((c) => c.MentoredProjects)
       },
       {
         path: 'mentored-projects/:projectId',
@@ -38,28 +35,24 @@ export const dashboardMentorRoutes: Routes = [
           )
       },
       {
-        path: 'mentored-projects/:projectId/participations/:participationId',
+        path: 'mentored-projects/participations/:participationId',
         title: 'Détail candidature',
         loadComponent: () =>
-          import(
-            '../dashboard/pages/mentor/mentored-participation-detail/mentored-participation-detail'
-          ).then((c) => c.MentoredParticipationDetail)
+          import('../dashboard/pages/mentor/mentored-participation-detail/mentored-participation-detail').then(
+            (c) => c.MentoredParticipationDetail
+          )
       },
       {
         path: 'resources',
         title: 'Ressources',
         loadComponent: () =>
-          import('../dashboard/pages/mentor/resources/resources-list/resources-list').then(
-            (c) => c.ResourcesList
-          )
+          import('../dashboard/pages/mentor/resources/resources-list/resources-list').then((c) => c.ResourcesList)
       },
       {
         path: 'resources/:id',
         title: 'Détail ressource',
         loadComponent: () =>
-          import('../dashboard/pages/mentor/resources/resource-detail/resource-detail').then(
-            (c) => c.ResourceDetail
-          )
+          import('../dashboard/pages/mentor/resources/resource-detail/resource-detail').then((c) => c.ResourceDetail)
       }
     ]
   }
