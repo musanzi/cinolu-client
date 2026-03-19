@@ -57,7 +57,6 @@ export class MentoredParticipationDetail implements OnInit, OnDestroy {
     filePdf: FileText
   };
 
-  projectId!: string;
   participationId!: string;
 
   apiUrl = environment.apiUrl;
@@ -95,10 +94,8 @@ export class MentoredParticipationDetail implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.projectId = this.route.snapshot.paramMap.get('projectId') ?? '';
     this.participationId = this.route.snapshot.paramMap.get('participationId') ?? '';
     this.mentorshipStore.loadParticipationDetail({
-      projectId: this.projectId,
       participationId: this.participationId
     });
   }
