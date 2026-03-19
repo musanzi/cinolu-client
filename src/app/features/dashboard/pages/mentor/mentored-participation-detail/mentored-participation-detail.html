@@ -1,19 +1,5 @@
 <div class="pb-20">
-  @if (mentorshipStore.selectedParticipation()?.project) {
-  <a
-    [routerLink]="['/dashboard/mentor/mentored-projects']"
-    class="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-primary-600 mb-6 group transition-colors">
-    <i-lucide class="text-base group-hover:-translate-x-0.5 transition-transform" [name]="icons.arrowBack" />
-    Retour aux candidatures
-  </a>
-  } @else {
-  <a
-    routerLink="/dashboard/mentor/mentored-projects"
-    class="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-primary-600 mb-6 group transition-colors">
-    <i-lucide class="text-base group-hover:-translate-x-0.5 transition-transform" [name]="icons.arrowBack" />
-    Retour aux projets
-  </a>
-  } @if (mentorshipStore.isLoadingDetail()) {
+  @if (mentorshipStore.isLoadingDetail()) {
   <div class="space-y-4 animate-pulse">
     <div class="dashboard-card p-6">
       <div class="flex gap-4">

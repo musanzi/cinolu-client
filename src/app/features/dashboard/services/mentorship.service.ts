@@ -20,10 +20,8 @@ export class MentorshipService {
     return this._http.get<{ data: IProject[] }>('projects/me/mentored-projects').pipe(map((res) => res.data));
   }
 
-  getMentoredProject(projectId: string): Observable<IProject> {
-    return this._http
-      .get<{ data: IProject }>(`projects/me/mentored-projects/${projectId}`)
-      .pipe(map((res) => res.data));
+  getMentoredProject(projectSlug: string): Observable<IProject> {
+    return this._http.get<{ data: IProject }>(`projects/by-slug/${projectSlug}`).pipe(map((res) => res.data));
   }
 
   getMentoredProjectParticipations(
@@ -38,13 +36,15 @@ export class MentorshipService {
     return this._http
       .get<{
         data: [IParticipation[], number];
-      }>(`projects/me/mentored-projects/${projectId}/participations`, { params })
+      }>(`projects/${projectId}/participations`, { params })
       .pipe(map((res) => res.data));
+
+    // projects/:projectId/participations
   }
 
-  getMentoredProjectParticipation(projectId: string, participationId: string): Observable<IParticipation> {
+  getMentoredProjectParticipation(participationId: string): Observable<IParticipation> {
     return this._http
-      .get<{ data: IParticipation }>(`projects/me/mentored-projects/${projectId}/participations/${participationId}`)
+      .get<{ data: IParticipation }>(`projects/participations/${participationId}`)
       .pipe(map((res) => res.data));
   }
 }

@@ -1,5 +1,4 @@
 import { Component, inject, OnInit, OnDestroy, ChangeDetectionStrategy, computed } from '@angular/core';
-import { RouterLink, ActivatedRoute } from '@angular/router';
 import { CommonModule, NgClass } from '@angular/common';
 import { ApiImgPipe } from '@shared/pipes/api-img.pipe';
 import { MentorshipStore } from '../../../store/mentorship.store';
@@ -25,10 +24,11 @@ import {
   TrendingUp,
   User
 } from 'lucide-angular';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mentored-participation-detail',
-  imports: [RouterLink, NgClass, ApiImgPipe, CommonModule, LucideAngularModule],
+  imports: [NgClass, ApiImgPipe, CommonModule, LucideAngularModule],
   templateUrl: './mentored-participation-detail.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
