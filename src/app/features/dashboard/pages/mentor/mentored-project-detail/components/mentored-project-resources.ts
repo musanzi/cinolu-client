@@ -152,15 +152,12 @@ export class MentoredProjectResources {
   showCreateModal = signal(false);
 
   constructor() {
-    effect(
-      () => {
-        const projectId = this.projectId();
-        if (projectId) {
-          this.loadResources();
-        }
-      },
-      { allowSignalWrites: true }
-    );
+    effect(() => {
+      const projectId = this.projectId();
+      if (projectId) {
+        this.loadResources();
+      }
+    });
   }
 
   private loadResources(): void {

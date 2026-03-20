@@ -54,16 +54,13 @@ export class MentoredProjectDetail implements OnInit, OnDestroy {
   activeTab = signal<'participations' | 'resources'>('participations');
 
   constructor() {
-    effect(
-      () => {
-        const project = this.mentorshipStore.selectedProject();
-        if (!project?.id || this.projectId() === project.id) return;
+    effect(() => {
+      const project = this.mentorshipStore.selectedProject();
+      if (!project?.id || this.projectId() === project.id) return;
 
-        this.projectId.set(project.id);
-        this.mentorshipStore.loadParticipations({ projectId: project.id });
-      },
-      { allowSignalWrites: true }
-    );
+      this.projectId.set(project.id);
+      this.mentorshipStore.loadParticipations({ projectId: project.id });
+    });
   }
 
   getProgress(completedCount: number, totalPhases: number): number {
