@@ -96,7 +96,7 @@ export const ParticipationsStore = signalStore(
             .pipe(
               tap(() => {
                 _toast.showSuccess('Candidature soumise avec succès');
-                _router.navigate(['/dashboard/programs/my-applications']);
+                _router.navigate(['/dashboard/user/programs/my-applications']);
                 patchState(store, { isLoading: false });
               }),
               catchError((err) => {
@@ -110,14 +110,13 @@ export const ParticipationsStore = signalStore(
     ),
 
     checkExistingParticipation: (projectId: string, ventureId: string): boolean => {
-      return store.participations().some((p) => p.project.id === projectId && p.venture && p.venture.id === ventureId);
+      return store.participations().some((p) => p?.project?.id === projectId && p?.venture?.id === ventureId);
     },
 
     clearSelectedParticipation: () => {
       patchState(store, { selectedParticipation: null });
     },
 
-    /** Vote autorisé uniquement si le projet est en cours ou à venir. */
     canVote: (project: IProject | null): boolean => {
       if (!project) return false;
       const now = new Date();
