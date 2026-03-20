@@ -109,6 +109,6 @@ export class DiscoverPrograms implements OnInit {
   }
 
   hasApplied(projectId: string): boolean {
-    return this.participationsStore.participations().some((p) => p.project.id === projectId);
+    return this.participationsStore.participations().some((p) => p?.project?.id === projectId);
   }
 }

@@ -118,7 +118,7 @@ export class ProgramDetail implements OnInit {
   hasApplied(): boolean {
     const project = this.projectStore.project();
     if (!project) return false;
-    return this.participationsStore.participations().some((p) => p.project.id === project.id);
+    return this.participationsStore.participations().some((p) => p?.project?.id === project.id);
   }
 
   onApplyClick(): void {
