@@ -80,7 +80,7 @@
       <button
         type="button"
         (click)="onTabChange('participations')"
-        [class]="activeTab() === 'participations' 
+        [class]="activeTab() === 'participations'
           ? 'px-4 py-2 text-sm font-medium rounded-lg bg-primary-600 text-white transition-colors'
           : 'px-4 py-2 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-100 transition-colors'">
         <span class="flex items-center gap-2">
@@ -91,7 +91,7 @@
       <button
         type="button"
         (click)="onTabChange('resources')"
-        [class]="activeTab() === 'resources' 
+        [class]="activeTab() === 'resources'
           ? 'px-4 py-2 text-sm font-medium rounded-lg bg-primary-600 text-white transition-colors'
           : 'px-4 py-2 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-100 transition-colors'">
         <span class="flex items-center gap-2">
@@ -267,9 +267,9 @@
   }
 
   <!-- Tab Content: Resources -->
-  @if (activeTab() === 'resources' && project) {
+  <!-- @if (activeTab() === 'resources' && project) {
     <app-mentored-project-resources [projectId]="project.id" />
-  }
+  } -->
 
   } @else {
   <div class="dashboard-card p-12 text-center">
