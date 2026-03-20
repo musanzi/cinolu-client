@@ -106,7 +106,7 @@ export const VenturesStore = signalStore(
       pipe(
         tap(() => patchState(store, { isLoading: true })),
         switchMap(({ slug, data, onSuccess }) => {
-          return _http.patch<{ data: IVenture }>(`ventures/${slug}`, data).pipe(
+          return _http.patch<{ data: IVenture }>(`ventures/by-slug/${slug}`, data).pipe(
             tap(({ data: updated }) => {
               patchState(store, {
                 ventures: store.ventures().map((v) => (v.slug === slug ? updated : v)),
@@ -131,7 +131,7 @@ export const VenturesStore = signalStore(
       pipe(
         tap(() => patchState(store, { isLoading: true })),
         switchMap(({ id, onSuccess }) => {
-          return _http.delete<void>(`ventures/${id}`).pipe(
+          return _http.delete<void>(`ventures/id/${id}`).pipe(
             tap(() => {
               patchState(store, {
                 ventures: store.ventures().filter((v) => v.id !== id),

@@ -29,7 +29,7 @@ export const DeliverablesStore = signalStore(
           return _http
             .post<{
               data: IDeliverableSubmission;
-            }>(`deliverables/${input.deliverableId}/${input.participationId}/submissions`, form)
+            }>(`deliverables/id/${input.deliverableId}/participations/${input.participationId}/submissions`, form)
             .pipe(
               map(({ data }) => {
                 patchState(store, { isLoading: false, lastSubmission: data });

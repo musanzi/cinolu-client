@@ -36,10 +36,10 @@ export class MentorshipService {
     return this._http
       .get<{
         data: [IParticipation[], number];
-      }>(`projects/${projectId}/participations`, { params })
+      }>(`projects/id/${projectId}/participations`, { params })
       .pipe(map((res) => res.data));
 
-    // projects/:projectId/participations
+    // projects/id/:projectId/participations
   }
 
   getMentoredProjectParticipation(participationId: string): Observable<IParticipation> {

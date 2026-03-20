@@ -106,7 +106,7 @@ export class ProductForm implements OnInit {
 
   getGalleryUploadUrl(): string {
     const productId = this.product()?.id;
-    return productId ? `products/${productId}/gallery` : '';
+    return productId ? `products/id/${productId}/gallery` : '';
   }
 
   removeGalleryImage(imageId: string | number): void {

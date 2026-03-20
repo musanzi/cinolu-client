@@ -26,7 +26,7 @@ export const DeleteCommentStore = signalStore(
       pipe(
         tap(() => patchState(store, { isLoading: true })),
         switchMap(({ id }) => {
-          return _http.delete<void>(`comments/${id}`).pipe(
+          return _http.delete<void>(`comments/id/${id}`).pipe(
             map(() => {
               patchState(store, { isLoading: false });
               _commentsStore.deleteComment(id);

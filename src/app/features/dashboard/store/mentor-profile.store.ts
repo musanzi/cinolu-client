@@ -123,7 +123,7 @@ export const MentorProfileStore = signalStore(
       pipe(
         tap(() => patchState(store, { isLoading: true })),
         switchMap(({ id, dto }) =>
-          _http.patch<{ data: IMentorProfile }>(`mentors/request/${id}`, dto).pipe(
+          _http.patch<{ data: IMentorProfile }>(`mentors/requests/${id}`, dto).pipe(
             tap(({ data }) => {
               patchState(store, {
                 profileMentor: [data],
@@ -150,7 +150,7 @@ export const MentorProfileStore = signalStore(
         switchMap(({ id, file }) => {
           const formData = new FormData();
           formData.append('cv', file);
-          return _http.post<{ data: IMentorProfile }>(`mentors/${id}/cv`, formData).pipe(
+          return _http.post<{ data: IMentorProfile }>(`mentors/id/${id}/cv`, formData).pipe(
             tap(({ data }) => {
               patchState(store, {
                 profileMentor: [data],

@@ -46,7 +46,7 @@ export class ResourcesService {
   }
 
   updateResource(id: string, dto: UpdateResourceDto): Observable<IResource> {
-    return this._http.patch<{ data: IResource }>(`resources/${id}`, dto).pipe(map((res) => res.data));
+    return this._http.patch<{ data: IResource }>(`resources/id/${id}`, dto).pipe(map((res) => res.data));
   }
 
   updateResourceFile(id: string, file: File): Observable<IResource> {
@@ -57,7 +57,7 @@ export class ResourcesService {
   }
 
   deleteResource(id: string): Observable<void> {
-    return this._http.delete<void>(`resources/${id}`);
+    return this._http.delete<void>(`resources/id/${id}`);
   }
 
   getResourceFileUrl(resource: IResource): string {

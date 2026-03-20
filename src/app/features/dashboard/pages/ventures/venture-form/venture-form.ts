@@ -201,7 +201,7 @@ export class VentureForm implements OnInit {
     if (!ventureId) {
       return '';
     }
-    return `ventures/${ventureId}/cover/`;
+    return `ventures/id/${ventureId}/cover/`;
   }
 
   getLogoUploadUrl(): string {
@@ -209,7 +209,7 @@ export class VentureForm implements OnInit {
     if (!ventureId) {
       return '';
     }
-    return `ventures/${ventureId}/logo/`;
+    return `ventures/id/${ventureId}/logo/`;
   }
 
   getGalleryUploadUrl(): string {
@@ -217,7 +217,7 @@ export class VentureForm implements OnInit {
     if (!ventureId) {
       return '';
     }
-    const url = `ventures/${ventureId}/gallery`;
+    const url = `ventures/id/${ventureId}/gallery`;
     return url;
   }
 

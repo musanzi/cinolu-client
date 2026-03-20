@@ -125,7 +125,7 @@ export const ProductsStore = signalStore(
       pipe(
         tap(() => patchState(store, { isLoading: true })),
         switchMap((id) =>
-          _http.delete<void>(`products/${id}`).pipe(
+          _http.delete<void>(`products/id/${id}`).pipe(
             map(() => {
               patchState(store, {
                 products: store.products().filter((p) => p.id !== id),

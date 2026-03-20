@@ -67,7 +67,7 @@ export const ParticipationsStore = signalStore(
       pipe(
         tap(() => patchState(store, { isLoading: true, participations: [] })),
         switchMap((projectId) =>
-          _http.get<{ data: IParticipation[] }>(`projects/${projectId}/participations`).pipe(
+          _http.get<{ data: IParticipation[] }>(`projects/id/${projectId}/participations`).pipe(
             tap(({ data }) => {
               const userId = _authStore.user()?.id;
               const withVote = data.map((p) => toParticipationWithVote(p, userId));
@@ -92,7 +92,7 @@ export const ParticipationsStore = signalStore(
         tap(() => patchState(store, { isLoading: true })),
         switchMap((data) =>
           _http
-            .post<{ data: IParticipation }>(`projects/${data.projectId}/participate`, { ventureId: data.ventureId })
+            .post<{ data: IParticipation }>(`projects/id/${data.projectId}/participate`, { ventureId: data.ventureId })
             .pipe(
               tap(() => {
                 _toast.showSuccess('Candidature soumise avec succès');

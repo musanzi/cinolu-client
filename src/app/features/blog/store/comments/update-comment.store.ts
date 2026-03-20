@@ -33,7 +33,7 @@ export const UpdateCommentStore = signalStore(
       pipe(
         tap(() => patchState(store, { isLoading: true })),
         switchMap(({ payload, onSuccess }) => {
-          return _http.patch<{ data: IComment }>(`comments/${payload.id}`, payload).pipe(
+          return _http.patch<{ data: IComment }>(`comments/id/${payload.id}`, payload).pipe(
             map(({ data }) => {
               _commentsStore.updateComment(data);
               onSuccess();
