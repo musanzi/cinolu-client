@@ -1,14 +1,14 @@
 <header class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12 lg:mb-16">
   <div class="max-w-2xl">
     <div
-      class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary-50 to-primary-100 text-primary-700 text-sm font-semibold rounded-full border border-primary-200/60 mb-6">
+      class="inline-flex items-center px-4 py-2 bg-linear-to-r from-primary-50 to-primary-100 text-primary-700 text-sm font-semibold rounded-full border border-primary-200/60 mb-6">
       <div class="w-2 h-2 bg-primary-500 rounded-full mr-2"></div>
       {{ badgeKey | translate }}
     </div>
     <h3
       class="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-800 font-satoshi mb-4 tracking-tight leading-tight hyphens-none">
       {{ titleKey | translate }} @if (titleHighlightKey) {
-      <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-700"
+      <span class="text-transparent bg-clip-text bg-linear-to-r from-primary-500 to-primary-700"
         >{{ titleHighlightKey | translate }}</span
       >
       }
