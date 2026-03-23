@@ -144,8 +144,7 @@ export interface IProgram extends IBase {
   is_highlighted: boolean;
   subprograms: ISubprogram[];
   category: ICategory;
-  indicators: IIndicator[];
-  indicators_grouped?: Record<string, IIndicator[]>;
+  sector: IProgramSector;
 }
 
 export interface ISubprogram extends IBase {
@@ -182,6 +181,10 @@ export interface ICategory extends IBase {
   name: string;
 }
 
+export interface IProgramSector extends IBase {
+  name: string;
+}
+
 export interface IHighlight {
   programs?: IProgram[];
   subprograms?: ISubprogram[];
@@ -203,9 +206,7 @@ export interface IPhase extends IBase {
   started_at: Date;
   ended_at: Date;
   deliverables: IDeliverable[];
-  /** Populated when the current user is a mentor on this project */
   mentors?: IMentorProfileSummary[];
-  /** Mapped count from API (loadRelationCountAndMap) */
   participationsCount?: number;
 }
 
@@ -221,7 +222,6 @@ export interface IDeliverableSubmission extends IBase {
   participation?: { id: string };
 }
 
-/** Lightweight mentor profile returned inside phases */
 export interface IMentorProfileSummary {
   id: string;
   owner: Pick<IUser, 'id' | 'name' | 'email' | 'profile'>;
@@ -233,8 +233,6 @@ export interface FAQItem {
   category: 'general' | 'programs' | 'events' | 'entrepreneurs' | 'technical' | 'dashboard';
   open?: boolean;
 }
-
-// Mentor Profiles
 
 export enum MentorStatus {
   PENDING = 'pending',
@@ -392,8 +390,6 @@ export interface IMentee extends IBase {
   progress_notes?: string;
 }
 
-// Participations (Candidatures aux programmes)
-
 export enum ParticipationStatus {
   DRAFT = 'draft',
   SUBMITTED = 'submitted',
@@ -403,7 +399,6 @@ export enum ParticipationStatus {
   REJECTED = 'rejected'
 }
 
-/** D’après l’API : un upvote est lié à un user (pour dériver hasUserVoted). */
 export interface IParticipationUpvote {
   user: Pick<IUser, 'id'>;
 }
@@ -414,9 +409,7 @@ export interface IParticipation extends IBase {
   phases?: IPhase[];
   venture: IVenture | null;
   upvotes?: IParticipationUpvote[];
-  /** Populated in mentor detail view */
   deliverable_submissions?: IDeliverableSubmission[];
-  /** Mapped count from API */
   upvotesCount?: number;
 }
 
