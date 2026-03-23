@@ -121,7 +121,6 @@ import { Router } from '@angular/router';
       <div
         role="button"
         tabindex="0"
-        aria-label="Fermer le modal"
         class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
         (click)="closeCreateModal()"
         (keydown.escape)="closeCreateModal()"
@@ -131,11 +130,9 @@ import { Router } from '@angular/router';
           class="bg-white dark:bg-slate-800 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
           (click)="$event.stopPropagation()"
           (keydown)="$event.stopPropagation()"
-          role="dialog"
-          aria-modal="true">
+          role="dialog">
           <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-6">Créer une ressource</h2>
           <app-resource-form
-            mode="create"
             [contextProjectId]="projectId()"
             [isLoading]="resourcesStore.isCreating()"
             (submitForm)="onSubmitCreate($event)"
@@ -192,7 +189,8 @@ export class MentoredProjectResources {
   }
 
   onViewResource(resource: IResource): void {
-    this._router.navigate(['/dashboard/mentor/resources', resource.id]);
+    const url = this._resourcesService.getResourceFileUrl(resource);
+    window.open(url, '_blank');
   }
 
   onDeleteResource(resource: IResource): void {

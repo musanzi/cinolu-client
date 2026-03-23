@@ -61,7 +61,7 @@ export class ResourcesService {
   }
 
   getResourceFileUrl(resource: IResource): string {
-    return `${environment.apiUrl}${resource.file}`;
+    return `${environment.apiUrl}uploads/resources/${resource.file}`;
   }
 
   getFileExtension(resource: IResource): string {
