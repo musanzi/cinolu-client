@@ -569,6 +569,12 @@
     "no_subprogram": "Aucun sous-programme",
     "bad_path": "Mauvais chemin !"
   },
+  "sectors": {
+    "badge": "Secteurs",
+    "title": "Nos pôles ",
+    "title_highlight": "sectoriels",
+    "description": "Des domaines d’intervention structurés pour rendre notre offre plus lisible et plus impactante."
+  },
   "recent_projects": {
     "badge": "Programmes récents",
     "title": "Programmes ",

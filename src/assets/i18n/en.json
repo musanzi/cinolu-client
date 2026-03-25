@@ -558,6 +558,12 @@
     "no_subprogram": "No subprogram",
     "bad_path": "Wrong path!"
   },
+  "sectors": {
+    "badge": "Sectors",
+    "title": "Our sector ",
+    "title_highlight": "focus areas",
+    "description": "Structured intervention areas that make our offer clearer, more coherent and more impactful."
+  },
   "recent_projects": {
     "badge": "Recent Programs",
     "title": "Recent ",
