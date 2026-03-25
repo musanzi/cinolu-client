@@ -390,17 +390,17 @@ export interface IMentee extends IBase {
   progress_notes?: string;
 }
 
-export enum ParticipationStatus {
-  DRAFT = 'draft',
-  SUBMITTED = 'submitted',
-  UNDER_REVIEW = 'under_review',
-  SHORTLISTED = 'shortlisted',
-  ACCEPTED = 'accepted',
-  REJECTED = 'rejected'
-}
+export type ParticipationReviewStatus = 'pending' | 'in_review' | 'qualified' | 'disqualified' | 'info_requested';
 
 export interface IParticipationUpvote {
   user: Pick<IUser, 'id'>;
+}
+
+export interface IParticipationReviewer {
+  id: string;
+  name: string;
+  email: string;
+  profile?: string | null;
 }
 
 export interface IParticipation extends IBase {
@@ -411,6 +411,10 @@ export interface IParticipation extends IBase {
   upvotes?: IParticipationUpvote[];
   deliverable_submissions?: IDeliverableSubmission[];
   upvotesCount?: number;
+  status?: ParticipationReviewStatus;
+  review_message?: string | null;
+  reviewed_at?: Date | string | null;
+  reviewed_by?: IParticipationReviewer | null;
 }
 
 export interface IParticipationWithVote extends IParticipation {

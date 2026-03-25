@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ParticipationsStore } from '../../../store/participations.store';
 import { ApiImgPipe } from '../../../../../shared/pipes/api-img.pipe';
-import { IParticipation } from '../../../../../shared/models/entities.models';
+import { IParticipation, ParticipationReviewStatus } from '../../../../../shared/models/entities.models';
 import {
   ArrowRight,
   BadgeCheck,
@@ -57,42 +57,40 @@ export class MyApplications implements OnInit {
       };
     }
 
-    const now = new Date();
-    const endDate = participation.project.ended_at ? new Date(participation.project.ended_at) : null;
-    const isProgramEnded = endDate && endDate < now;
-
-    if (!participation.phases || participation.phases.length === 0) {
-      if (isProgramEnded) {
+    const reviewStatus = participation.status as ParticipationReviewStatus | undefined;
+    switch (reviewStatus) {
+      case 'qualified':
         return {
-          label: 'Non sélectionné',
-          classes: 'bg-gray-50 text-gray-600 border border-gray-200',
+          label: 'Qualifié',
+          classes: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
+          icon: this.icons.verified
+        };
+      case 'disqualified':
+        return {
+          label: 'Disqualifié',
+          classes: 'bg-red-50 text-red-700 border border-red-200',
           icon: this.icons.cancel
         };
-      }
-      return {
-        label: 'En attente',
-        classes: 'bg-amber-50 text-amber-700 border border-amber-200',
-        icon: this.icons.schedule
-      };
+      case 'in_review':
+        return {
+          label: 'En revue',
+          classes: 'bg-blue-50 text-blue-700 border border-blue-200',
+          icon: this.icons.checkCircle
+        };
+      case 'info_requested':
+        return {
+          label: 'Infos demandées',
+          classes: 'bg-amber-50 text-amber-700 border border-amber-200',
+          icon: this.icons.schedule
+        };
+      case 'pending':
+      default:
+        return {
+          label: 'En attente',
+          classes: 'bg-slate-100 text-slate-700 border border-slate-200',
+          icon: this.icons.schedule
+        };
     }
-
-    const currentPhase = participation.phases[participation.phases.length - 1];
-    const totalPhases = participation.project.phases?.length || 0;
-    const isLastPhase = participation.phases.length === totalPhases;
-
-    if (isLastPhase && totalPhases > 0) {
-      return {
-        label: currentPhase?.name ?? 'Terminé',
-        classes: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
-        icon: this.icons.verified
-      };
-    }
-
-    return {
-      label: currentPhase?.name ?? 'En cours',
-      classes: 'bg-blue-50 text-blue-700 border border-blue-200',
-      icon: this.icons.checkCircle
-    };
   }
 
   hasMultiplePhases(participation: IParticipation): boolean {

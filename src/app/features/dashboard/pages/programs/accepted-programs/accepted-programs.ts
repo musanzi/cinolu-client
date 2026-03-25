@@ -82,7 +82,7 @@ export class AcceptedPrograms implements OnInit {
     const project = participation.project;
     if (!project) return false;
     const projectPhases = project.phases ?? [];
-    return projectPhases.length >= 1;
+    return projectPhases.length >= 1 && participation.status === 'qualified';
   }
 
   analyzeParticipation(participation: IParticipation): ParticipationAnalysis {

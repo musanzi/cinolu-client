@@ -58,15 +58,60 @@
         </div>
       </div>
 
-      @if (participation.upvotesCount !== undefined) {
-      <div class="shrink-0 text-center">
-        <div
-          class="w-12 h-12 rounded-xl bg-primary-50 border border-primary-100 flex flex-col items-center justify-center">
-          <i-lucide class="text-primary-600 text-base" [name]="icons.thumbUp" />
-          <span class="text-xs font-bold text-primary-700">{{ participation.upvotesCount }}</span>
+      <div class="shrink-0 flex flex-col items-end gap-2">
+        <span
+          class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold border"
+          [ngClass]="getReviewStatusMeta(participation.status).classes">
+          <i-lucide [name]="icons.review" [size]="12" />
+          {{ getReviewStatusMeta(participation.status).label }}
+        </span>
+
+        @if (participation.upvotesCount !== undefined) {
+        <div class="text-center">
+          <div
+            class="w-12 h-12 rounded-xl bg-primary-50 border border-primary-100 flex flex-col items-center justify-center">
+            <i-lucide class="text-primary-600 text-base" [name]="icons.thumbUp" />
+            <span class="text-xs font-bold text-primary-700">{{ participation.upvotesCount }}</span>
+          </div>
         </div>
+        }
       </div>
-      }
+    </div>
+  </div>
+
+  <div class="dashboard-card p-5 mb-6">
+    <div class="flex items-center gap-2 mb-3">
+      <div class="w-8 h-8 rounded-lg bg-linear-to-br from-primary-500 to-primary-700 flex items-center justify-center">
+        <i-lucide class="text-white text-sm" [name]="icons.review" />
+      </div>
+      <h2 class="dashboard-heading-5">État de revue</h2>
+    </div>
+
+    <div class="grid gap-3 md:grid-cols-2">
+      <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+        <p class="text-xs uppercase tracking-wider text-slate-500 mb-1">Statut</p>
+        <span
+          class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold border"
+          [ngClass]="getReviewStatusMeta(participation.status).classes">
+          {{ getReviewStatusMeta(participation.status).label }}
+        </span>
+      </div>
+
+      <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+        <p class="text-xs uppercase tracking-wider text-slate-500 mb-1">Revu par</p>
+        <p class="text-sm font-medium text-slate-900">{{ participation.reviewed_by?.name ?? 'Pas encore attribué' }}</p>
+        @if (participation.reviewed_by?.email) {
+        <p class="text-xs text-slate-500 mt-1">{{ participation.reviewed_by?.email }}</p>
+        }
+      </div>
+
+      <div class="rounded-xl border border-slate-200 bg-slate-50 p-4 md:col-span-2">
+        <p class="text-xs uppercase tracking-wider text-slate-500 mb-1">Message de revue</p>
+        <p class="text-sm text-slate-700">{{ participation.review_message || 'Aucun message de revue pour le moment.' }}</p>
+        @if (participation.reviewed_at) {
+        <p class="text-xs text-slate-500 mt-2">Mis à jour le {{ participation.reviewed_at | date:'d MMM yyyy, HH:mm':'':'fr' }}</p>
+        }
+      </div>
     </div>
   </div>
 

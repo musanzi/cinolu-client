@@ -2,12 +2,13 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IParticipation, IProject } from '@shared/models/entities.models';
+import { IParticipation, IProject, ParticipationReviewStatus } from '@shared/models/entities.models';
 
 export interface MentorParticipationsFilter {
   page?: number;
   q?: string;
   phaseId?: string;
+  status?: ParticipationReviewStatus;
 }
 
 @Injectable({
@@ -32,6 +33,7 @@ export class MentorshipService {
     if (filter.page) params = params.set('page', String(filter.page));
     if (filter.q) params = params.set('q', filter.q);
     if (filter.phaseId) params = params.set('phaseId', filter.phaseId);
+    if (filter.status) params = params.set('status', filter.status);
 
     return this._http
       .get<{

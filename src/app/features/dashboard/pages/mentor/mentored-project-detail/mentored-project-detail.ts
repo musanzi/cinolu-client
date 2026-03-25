@@ -4,7 +4,7 @@ import { CommonModule, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiImgPipe } from '@shared/pipes/api-img.pipe';
 import { MentorshipStore } from '../../../store/mentorship.store';
-import { IPhase } from '@shared/models/entities.models';
+import { IPhase, ParticipationReviewStatus } from '@shared/models/entities.models';
 import {
   ArrowLeft,
   CalendarDays,
@@ -15,6 +15,7 @@ import {
   Layers,
   LucideAngularModule,
   Search,
+  ShieldCheck,
   User,
   UserX,
   Users
@@ -44,6 +45,7 @@ export class MentoredProjectDetail implements OnInit, OnDestroy {
     groupOff: UserX,
     layers: Layers,
     person: User,
+    review: ShieldCheck,
     schedule: Clock3,
     search: Search
   };
@@ -51,6 +53,7 @@ export class MentoredProjectDetail implements OnInit, OnDestroy {
   projectId = signal<string>('');
   searchQuery = signal<string>('');
   selectedPhaseId = signal<string>('');
+  selectedStatus = signal<ParticipationReviewStatus | ''>('');
   activeTab = signal<'participations' | 'resources'>('participations');
 
   constructor() {
@@ -96,14 +99,20 @@ export class MentoredProjectDetail implements OnInit, OnDestroy {
     this.applyFilters();
   }
 
+  onStatusFilter(status: ParticipationReviewStatus | ''): void {
+    this.selectedStatus.set(status);
+    this.applyFilters();
+  }
+
   private applyFilters(): void {
     const id = this.projectId();
     const q = this.searchQuery();
     const phaseId = this.selectedPhaseId();
-    this.mentorshipStore.setFilter(id, q, phaseId);
+    const status = this.selectedStatus();
+    this.mentorshipStore.setFilter(id, q, phaseId, status);
     this.mentorshipStore.loadParticipations({
       projectId: id,
-      filter: { page: 1, q: q || undefined, phaseId: phaseId || undefined }
+      filter: { page: 1, q: q || undefined, phaseId: phaseId || undefined, status: status || undefined }
     });
   }
 
@@ -114,7 +123,8 @@ export class MentoredProjectDetail implements OnInit, OnDestroy {
       filter: {
         page: nextPage,
         q: this.searchQuery() || undefined,
-        phaseId: this.selectedPhaseId() || undefined
+        phaseId: this.selectedPhaseId() || undefined,
+        status: this.selectedStatus() || undefined
       }
     });
   }
@@ -134,5 +144,21 @@ export class MentoredProjectDetail implements OnInit, OnDestroy {
 
   onTabChange(tab: 'participations' | 'resources'): void {
     this.activeTab.set(tab);
+  }
+
+  getReviewStatusMeta(status?: ParticipationReviewStatus): { label: string; classes: string } {
+    switch (status) {
+      case 'qualified':
+        return { label: 'Qualifié', classes: 'bg-emerald-50 text-emerald-700 border-emerald-200' };
+      case 'disqualified':
+        return { label: 'Disqualifié', classes: 'bg-red-50 text-red-700 border-red-200' };
+      case 'in_review':
+        return { label: 'En revue', classes: 'bg-blue-50 text-blue-700 border-blue-200' };
+      case 'info_requested':
+        return { label: 'Infos demandées', classes: 'bg-amber-50 text-amber-700 border-amber-200' };
+      case 'pending':
+      default:
+        return { label: 'En attente', classes: 'bg-slate-100 text-slate-700 border-slate-200' };
+    }
   }
 }

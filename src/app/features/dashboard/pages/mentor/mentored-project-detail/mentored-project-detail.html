@@ -142,6 +142,18 @@
         }
       </select>
       }
+
+      <select
+        [ngModel]="selectedStatus()"
+        (ngModelChange)="onStatusFilter($event)"
+        class="text-sm border border-slate-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-primary-300 transition">
+        <option value="">Tous les statuts</option>
+        <option value="pending">En attente</option>
+        <option value="in_review">En revue</option>
+        <option value="qualified">Qualifié</option>
+        <option value="disqualified">Disqualifié</option>
+        <option value="info_requested">Infos demandées</option>
+      </select>
     </div>
 
     @if (mentorshipStore.isLoadingParticipations() && mentorshipStore.participations().length === 0) {
@@ -202,18 +214,26 @@
           </div>
           }
 
-          <div class="flex items-center gap-2 shrink-0">
-            <div class="w-20 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-              <div
-                class="h-full rounded-full transition-all duration-500"
-                [ngClass]="{
-                        'bg-emerald-500': progress === 100,
-                        'bg-primary-500': progress > 0 && progress < 100,
-                        'bg-slate-300': progress === 0
-                      }"
-                [style.width.%]="progress"></div>
+          <div class="flex flex-col items-end gap-2 shrink-0">
+            <span
+              class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium border"
+              [ngClass]="getReviewStatusMeta(participation.status).classes">
+              <i-lucide [name]="icons.review" [size]="12" />
+              {{ getReviewStatusMeta(participation.status).label }}
+            </span>
+            <div class="flex items-center gap-2">
+              <div class="w-20 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div
+                  class="h-full rounded-full transition-all duration-500"
+                  [ngClass]="{
+                          'bg-emerald-500': progress === 100,
+                          'bg-primary-500': progress > 0 && progress < 100,
+                          'bg-slate-300': progress === 0
+                        }"
+                  [style.width.%]="progress"></div>
+              </div>
+              <span class="text-xs text-slate-500 w-10 text-right">{{ completedPhases }}/{{ totalPhases }}</span>
             </div>
-            <span class="text-xs text-slate-500 w-10 text-right">{{ completedPhases }}/{{ totalPhases }}</span>
           </div>
 
           <span class="text-xs text-slate-400 shrink-0 hidden md:block">

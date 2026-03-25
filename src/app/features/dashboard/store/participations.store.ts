@@ -7,7 +7,19 @@ import { ToastrService } from '@core/services/toast/toastr.service';
 import { Router } from '@angular/router';
 import { AuthStore } from '@core/auth/auth.store';
 import { ParticipateProjectDto } from '../dto/create-participation.dto';
-import type { IProject, IParticipation, IParticipationWithVote } from '../../../shared/models/entities.models';
+import type {
+  IProject,
+  IParticipation,
+  IParticipationWithVote,
+  ParticipationReviewStatus
+} from '../../../shared/models/entities.models';
+
+interface ParticipationListFilters {
+  page?: number;
+  q?: string;
+  phaseId?: string;
+  status?: ParticipationReviewStatus;
+}
 
 interface IParticipationsStore {
   participations: IParticipationWithVote[];
@@ -63,17 +75,27 @@ export const ParticipationsStore = signalStore(
       )
     ),
 
-    loadProjectParticipations: rxMethod<string>(
+    loadProjectParticipations: rxMethod<{ projectId: string; filters?: ParticipationListFilters } | string>(
       pipe(
         tap(() => patchState(store, { isLoading: true, participations: [] })),
-        switchMap((projectId) =>
-          _http.get<{ data: IParticipation[] }>(`projects/id/${projectId}/participations`).pipe(
+        switchMap((payload) => {
+          const projectId = typeof payload === 'string' ? payload : payload.projectId;
+          const filters = typeof payload === 'string' ? undefined : payload.filters;
+
+          const params: Record<string, string | number> = {};
+          if (filters?.page) params['page'] = filters.page;
+          if (filters?.q) params['q'] = filters.q;
+          if (filters?.phaseId) params['phaseId'] = filters.phaseId;
+          if (filters?.status) params['status'] = filters.status;
+
+          return _http.get<{ data: [IParticipation[], number] }>(`projects/id/${projectId}/participations`, { params }).pipe(
             tap(({ data }) => {
+              const [items, total] = data;
               const userId = _authStore.user()?.id;
-              const withVote = data.map((p) => toParticipationWithVote(p, userId));
+              const withVote = items.map((p) => toParticipationWithVote(p, userId));
               patchState(store, {
                 participations: withVote,
-                totalCount: withVote.length,
+                totalCount: total,
                 isLoading: false
               });
             }),
@@ -82,8 +104,8 @@ export const ParticipationsStore = signalStore(
               _toast.showError(err.error?.message || 'Erreur lors du chargement des participations');
               return of(null);
             })
-          )
-        )
+          );
+        })
       )
     ),
 

@@ -3,7 +3,7 @@ import { inject, computed } from '@angular/core';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { catchError, of, pipe, switchMap, tap } from 'rxjs';
 import { ToastrService } from '@core/services/toast/toastr.service';
-import { IParticipation, IProject } from '@shared/models/entities.models';
+import { IParticipation, IProject, ParticipationReviewStatus } from '@shared/models/entities.models';
 import { MentorParticipationsFilter, MentorshipService } from '../services/mentorship.service';
 
 interface IMentorshipStore {
@@ -15,6 +15,7 @@ interface IMentorshipStore {
   currentPage: number;
   filterQ: string;
   filterPhaseId: string;
+  filterStatus: ParticipationReviewStatus | '';
   isLoading: boolean;
   isLoadingParticipations: boolean;
   isLoadingDetail: boolean;
@@ -31,6 +32,7 @@ export const MentorshipStore = signalStore(
     currentPage: 1,
     filterQ: '',
     filterPhaseId: '',
+    filterStatus: '',
     isLoading: false,
     isLoadingParticipations: false,
     isLoadingDetail: false
@@ -71,7 +73,8 @@ export const MentorshipStore = signalStore(
             totalParticipations: 0,
             currentPage: 1,
             filterQ: '',
-            filterPhaseId: ''
+            filterPhaseId: '',
+            filterStatus: ''
           })
         ),
         switchMap((projectSlug) =>
@@ -133,8 +136,8 @@ export const MentorshipStore = signalStore(
       )
     ),
 
-    setFilter: (projectId: string, q: string, phaseId: string) => {
-      patchState(store, { filterQ: q, filterPhaseId: phaseId, participations: [], currentPage: 1 });
+    setFilter: (projectId: string, q: string, phaseId: string, status: ParticipationReviewStatus | '') => {
+      patchState(store, { filterQ: q, filterPhaseId: phaseId, filterStatus: status, participations: [], currentPage: 1 });
     },
 
     clearSelectedProject: () => {
@@ -145,7 +148,8 @@ export const MentorshipStore = signalStore(
         selectedParticipation: null,
         currentPage: 1,
         filterQ: '',
-        filterPhaseId: ''
+        filterPhaseId: '',
+        filterStatus: ''
       });
     },
 
