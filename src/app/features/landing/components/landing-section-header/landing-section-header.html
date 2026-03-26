@@ -3,22 +3,22 @@
     <div
       class="inline-flex items-center px-4 py-2 bg-linear-to-r from-primary-50 to-primary-100 text-primary-700 text-sm font-semibold rounded-full border border-primary-200/60 mb-6">
       <div class="w-2 h-2 bg-primary-500 rounded-full mr-2"></div>
-      {{ badgeKey | translate }}
+      {{ badgeKey() | translate }}
     </div>
     <h3
       class="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-800 font-satoshi mb-4 tracking-tight leading-tight hyphens-none">
-      {{ titleKey | translate }} @if (titleHighlightKey) {
+      {{ titleKey() | translate }} @if (titleHighlightKey()) {
       <span class="text-transparent bg-clip-text bg-linear-to-r from-primary-500 to-primary-700"
-        >{{ titleHighlightKey | translate }}</span
+        >{{ titleHighlightKey() | translate }}</span
       >
       }
     </h3>
   </div>
-  @if (descriptionKey) {
+  @if (descriptionKey()) {
   <p
     class="text-slate-500 text-xs sm:text-base max-w-sm border-l-2 border-primary-500 pl-6 italic leading-relaxed"
-    [ngClass]="descriptionClass">
-    {{ descriptionKey | translate: descriptionParams }}
+    [ngClass]="descriptionClass()">
+    {{ descriptionKey() | translate: descriptionParams() }}
   </p>
   } @else {
   <ng-content select="[headerEnd]" />

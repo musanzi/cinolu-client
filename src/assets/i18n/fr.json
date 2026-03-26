@@ -261,12 +261,12 @@
     }
   },
   "onestop": {
-    "badge": "Plateforme Digitale",
+    "badge": "Outil d'accès",
     "title": "Cinolu",
     "title_highlight": "OneStop",
-    "heading": "Votre Guichet Unique",
-    "heading_highlight": "d'Accompagnement Entrepreneurial",
-    "description": "Connectez-vous pour gérer votre parcours, vos formations et rejoindre la communauté d'innovateurs.",
+    "heading": "Accédez plus simplement",
+    "heading_highlight": "à l'accompagnement Cinolu",
+    "description": "OneStop centralise les ressources, l'orientation, le mentorat et l'accès aux parcours pour rendre l'accompagnement Cinolu plus clair, plus fluide et plus utile.",
     "categories_title": "Catégories",
     "categories_available": "disponibles",
     "contact_button": "Contactez-nous",
@@ -321,8 +321,8 @@
         "description": "Des projets structurants qui utilisent la technologie pour résoudre des défis locaux et créer un impact durable à grande échelle."
       }
     },
-    "quote": "Ce n'est pas juste un hub d'innovation. C'est un lieu où les rêves deviennent des entreprises, où les talents trouvent leur voie, et où chaque succès inspire toute une génération d'entrepreneurs.",
-    "author": "Cinolu — Collectif",
+    "quote": "Cinolu est une infrastructure d'impact : un hub qui coordonne les talents, les partenariats et les outils nécessaires pour faire émerger des entreprises compétitives et un écosystème d'innovation durable.",
+    "author": "Cinolu — Hub d'innovation",
     "author_role": "Lubumbashi • RDC • Afrique",
     "stats": {
       "projects": "Entrepreneurs accompagnés",

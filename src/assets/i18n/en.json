@@ -259,12 +259,12 @@
     }
   },
   "onestop": {
-    "badge": "Digital Platform",
+    "badge": "Access tool",
     "title": "Cinolu",
     "title_highlight": "OneStop",
-    "heading": "Your One-Stop Shop",
-    "heading_highlight": "for Entrepreneurial Support",
-    "description": "Connect to manage your journey, training and join the community of innovators.",
+    "heading": "Access more easily",
+    "heading_highlight": "to Cinolu support",
+    "description": "OneStop brings together resources, guidance, mentorship and access pathways to make Cinolu support clearer, smoother and more useful.",
     "categories_title": "Categories",
     "categories_available": "available",
     "contact_button": "Contact us",
@@ -319,8 +319,8 @@
         "description": "Structuring projects that use technology to solve local challenges and create sustainable impact at scale."
       }
     },
-    "quote": "It's not just an innovation hub. It's a place where dreams become businesses, where talents find their way, and where each success inspires an entire generation of entrepreneurs.",
-    "author": "Cinolu — Collective",
+    "quote": "Cinolu is an impact infrastructure: a hub that coordinates talent, partnerships and tools to help competitive ventures and a durable innovation ecosystem emerge.",
+    "author": "Cinolu — Innovation Hub",
     "author_role": "Lubumbashi • DRC • Africa",
     "stats": {
       "projects": "Entrepreneurs supported",

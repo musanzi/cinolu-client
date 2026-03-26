@@ -2,8 +2,7 @@ import { afterNextRender, Component, ChangeDetectionStrategy, inject, PLATFORM_I
 import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { BookOpen, LucideAngularModule, MoveRight, Users } from 'lucide-angular';
-import { ADVANTAGES } from '@features/landing/data/advantages.data';
+import { BookOpen, GraduationCap, LucideAngularModule, MoveRight, Users } from 'lucide-angular';
 import { LandingSectionHeader } from '../landing-section-header/landing-section-header';
 
 @Component({
@@ -16,12 +15,12 @@ export class Onestop {
   private readonly platformId = inject(PLATFORM_ID);
 
   readonly ready = signal(false);
-  advantages = ADVANTAGES;
   categoryKeys = ['formation', 'financement', 'mentorat', 'incubation', 'acceleration'];
   icons = {
     moveRight: MoveRight,
     users: Users,
-    bookOpen: BookOpen
+    bookOpen: BookOpen,
+    graduationCap: GraduationCap
   };
 
   constructor() {

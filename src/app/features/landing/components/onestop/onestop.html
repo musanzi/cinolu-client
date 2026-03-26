@@ -1,128 +1,124 @@
 <section
-  class="min-h-[85vh] py-12 lg:py-20 px-8 lg:px-16 xl:px-24 2xl:px-32 max-w-screen-2xl mx-auto bg-gradient-to-br from-white via-gray-50/50 to-primary-50/30"
+  class="py-12 lg:py-18 px-8 lg:px-16 xl:px-24 2xl:px-32 max-w-screen-2xl mx-auto"
   [attr.inert]="ready() ? null : ''"
   tabindex="-1">
   <app-landing-section-header
     badgeKey="onestop.badge"
     titleKey="onestop.title"
     titleHighlightKey="onestop.title_highlight"
-    descriptionKey="onestop.heading"
-    descriptionClass="hidden lg:block" />
+    descriptionKey="onestop.description" />
 
-  <div class="flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-10 xl:gap-16">
-    <div class="lg:w-1/2 w-full text-center lg:text-left space-y-8">
-      <div>
-        <h2
-          class="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 tracking-tight leading-tight font-satoshi mb-5">
-          {{ 'onestop.heading' | translate }} <br class="hidden sm:block" />
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-700"
-            >{{ 'onestop.heading_highlight' | translate }}</span
-          >
-        </h2>
+  <div class="grid grid-cols-1 xl:grid-cols-[1.05fr_0.95fr] gap-8 lg:gap-10 xl:gap-14 items-start mt-10">
+    <div class="max-w-xl">
+      <h3 class="text-2xl sm:text-3xl lg:text-[2.35rem] leading-[1.05] font-black tracking-tight text-slate-950 font-satoshi">
+        {{ 'onestop.heading' | translate }}
+        <span class="text-primary-600">{{ 'onestop.heading_highlight' | translate }}</span>
+      </h3>
 
-        <p class="text-base md:text-lg text-gray-700 hyphens-none leading-relaxed max-w-lg mx-auto lg:mx-0">
-          {{ 'onestop.description' | translate }}
-        </p>
-      </div>
-
-      <div
-        class="bg-transparent sm:bg-gradient-to-br from-gray-50 to-white py-6 sm:px-6 rounded-lg sm:border border-gray-100">
-        <p class="text-gray-900 font-bold text-base sm:text-lg mb-3 text-center sm:text-left">
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-700"
-            >{{ 'onestop.categories_title' | translate }}</span
-          >
-          {{ 'onestop.categories_available' | translate }}
-        </p>
-        <div class="relative">
-          <div class="overflow-x-auto overflow-y-hidden snap-x snap-mandatory overscroll-x-contain">
-            <div
-              class="flex gap-2 sm:flex-wrap items-center justify-start sm:justify-center min-w-max sm:min-w-0 px-4 sm:px-0 py-4">
-              @for (categoryKey of categoryKeys; track trackByCategoryKey($index, categoryKey)) {
-              <span
-                class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-primary-100 text-primary-700 border border-primary-200 whitespace-nowrap shrink-0 hover:bg-primary-200 hover:border-primary-300 transition-colors duration-200 snap-center">
-                {{ 'onestop.categories.' + categoryKey | translate }}
-              </span>
-              }
+      <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-5">
+        <article class="rounded-lg border border-slate-200 bg-white p-4 lg:p-5">
+          <div class="flex items-start gap-3">
+            <div class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary-100 text-primary-600">
+              <i-lucide [name]="icons.bookOpen" class="size-5"></i-lucide>
+            </div>
+            <div>
+              <h3 class="text-sm sm:text-base font-bold text-slate-950">
+                {{ 'onestop.cards.resources.title' | translate }}
+              </h3>
+              <p class="mt-2 text-sm leading-6 text-slate-600">
+                {{ 'onestop.cards.resources.subtitle' | translate }}
+              </p>
             </div>
           </div>
-        </div>
+        </article>
+
+        <article class="rounded-lg border border-slate-200 bg-white p-4 lg:p-5">
+          <div class="flex items-start gap-3">
+            <div class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary-100 text-primary-600">
+              <i-lucide [name]="icons.users" class="size-5"></i-lucide>
+            </div>
+            <div>
+              <h3 class="text-sm sm:text-base font-bold text-slate-950">
+                {{ 'onestop.cards.entrepreneurs.title' | translate }}
+              </h3>
+              <p class="mt-2 text-sm leading-6 text-slate-600">
+                {{ 'onestop.cards.entrepreneurs.subtitle' | translate }}
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="rounded-lg border border-slate-200 bg-white p-4 lg:p-5">
+          <div class="flex items-start gap-3">
+            <div class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary-100 text-primary-600">
+              <i-lucide [name]="icons.graduationCap" class="size-5"></i-lucide>
+            </div>
+            <div>
+              <h3 class="text-sm sm:text-base font-bold text-slate-950">
+                {{ 'onestop.categories.formation' | translate }}
+              </h3>
+              <p class="mt-2 text-sm leading-6 text-slate-600">
+                {{ 'onestop.programs_button' | translate }}
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="rounded-lg border border-slate-200 bg-white p-4 lg:p-5">
+          <div class="flex items-start gap-3">
+            <div class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary-100 text-primary-600">
+              <i-lucide [name]="icons.moveRight" class="size-5"></i-lucide>
+            </div>
+            <div>
+              <h3 class="text-sm sm:text-base font-bold text-slate-950">
+                {{ 'onestop.cards.mentorship.title' | translate }}
+              </h3>
+              <p class="mt-2 text-sm leading-6 text-slate-600">
+                {{ 'onestop.cards.mentorship.subtitle' | translate }}
+              </p>
+            </div>
+          </div>
+        </article>
       </div>
 
-      <div
-        class="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center justify-center lg:justify-start pt-2">
+      <div class="mt-8 flex flex-col sm:flex-row gap-3 max-w-xl">
         <a
           routerLink="/contact-us"
-          class="inline-flex items-center justify-center gap-2 group px-4 py-2 rounded-lg font-semibold text-sm w-full sm:w-auto bg-primary-600 hover:bg-primary-700 text-white transition-colors">
-          <span>{{ 'onestop.contact_button' | translate }}</span>
-          <i-lucide
-            class="size-4 group-hover:translate-x-0.5 transition-transform duration-300"
-            [name]="icons.moveRight" />
+          class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-700">
+          {{ 'onestop.contact_button' | translate }}
+          <i-lucide [name]="icons.moveRight" class="size-4"></i-lucide>
         </a>
         <a
           routerLink="/programs"
-          class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm w-full sm:w-auto border-2 border-primary-600 text-primary-600 hover:bg-primary-50 transition-colors">
+          class="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50">
           {{ 'onestop.programs_button' | translate }}
         </a>
       </div>
     </div>
 
-    <div class="lg:w-1/2 w-full relative flex justify-center items-center py-8 lg:py-0">
-      <div class="relative w-full max-w-md lg:max-w-none">
-        <div
-          class="relative w-72 sm:w-80 md:w-96 lg:w-[380px] xl:w-[420px] h-[350px] sm:h-[400px] md:h-[450px] lg:h-[480px] xl:h-[520px] mx-auto">
-          <img
-            src="/images/entrepreneur-default.png"
-            [alt]="'onestop.image_alt' | translate"
-            loading="eager"
-            decoding="async"
-            class="w-full h-full object-contain drop-shadow-2xl"
-            width="420"
-            height="520" />
-        </div>
+    <div class="flex items-start justify-center xl:justify-end">
+      <img
+        src="/images/entrepreneur-default.png"
+        [alt]="'onestop.image_alt' | translate"
+        loading="eager"
+        decoding="async"
+        class="w-full max-w-[430px] h-auto object-contain"
+        width="430"
+        height="520" />
+    </div>
+  </div>
 
-        <div
-          class="absolute top-4 sm:top-8 left-1/2 -translate-x-1/2 sm:left-8 md:left-4 lg:left-8 xl:left-10 sm:translate-x-0 bg-white shadow-lg sm:shadow-xl rounded-lg sm:rounded-lg px-3 py-2 sm:px-5 sm:py-3 flex items-center gap-2 sm:gap-3 text-xs sm:text-sm border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 max-w-[200px] sm:max-w-none z-10">
-          <i-lucide [name]="icons.bookOpen" class="size-4 sm:size-5 text-primary-500" />
-          <div class="min-w-0">
-            <p class="font-bold text-gray-900 truncate text-xs sm:text-sm">
-              {{ 'onestop.cards.resources.title' | translate }}
-            </p>
-            <p class="text-gray-600 text-xs sm:text-xs truncate">
-              {{ 'onestop.cards.resources.subtitle' | translate }}
-            </p>
-          </div>
-        </div>
-
-        <div
-          class="absolute bottom-8 sm:bottom-4 right-1/2 translate-x-1/2 sm:right-4 md:right-8 lg:right-6 xl:right-10 sm:translate-x-0 bg-white shadow-lg sm:shadow-xl rounded-lg sm:rounded-lg px-3 py-2 sm:px-5 sm:py-3 flex items-center gap-2 sm:gap-3 text-xs sm:text-sm border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 max-w-[220px] sm:max-w-none z-10">
-          <div class="flex -space-x-2 sm:-space-x-3 shrink-0">
-            @for (color of ['primary', 'blue', 'green']; track trackByIndex($index)) {
-            <div
-              class="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br border-2 border-white shadow-sm"
-              [class]="'from-' + color + '-400 to-' + color + '-600'"></div>
-            }
-          </div>
-          <div class="min-w-0">
-            <p class="font-bold text-gray-900 whitespace-nowrap text-xs sm:text-sm">
-              {{ 'onestop.cards.entrepreneurs.title' | translate }}
-            </p>
-            <p class="text-gray-600 text-xs sm:text-xs truncate">
-              {{ 'onestop.cards.entrepreneurs.subtitle' | translate }}
-            </p>
-          </div>
-        </div>
-
-        <div
-          class="absolute top-1/2 -translate-y-1/2 -right-2 sm:right-0 md:-right-4 lg:right-0 bg-white shadow-lg sm:shadow-xl rounded-lg sm:rounded-lg px-3 py-2 sm:px-4 sm:py-3 flex flex-col items-center text-center border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:scale-105 z-10">
-          <i-lucide [name]="icons.users" class="size-4 sm:size-5 text-primary-500 mb-1" />
-          <p class="font-bold text-gray-900 text-xs sm:text-sm whitespace-nowrap">
-            {{ 'onestop.cards.mentorship.title' | translate }}
-          </p>
-          <p class="text-gray-600 text-xs sm:text-xs">{{ 'onestop.cards.mentorship.subtitle' | translate }}</p>
-        </div>
-
-        <div
-          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] bg-gradient-to-br from-primary-100 to-primary-200 rounded-full blur-3xl opacity-20 -z-10"></div>
+  <div class="mt-8 border border-slate-200 rounded-lg bg-white px-5 sm:px-8 lg:px-10 py-4">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+      <p class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
+        {{ 'onestop.categories_title' | translate }}
+      </p>
+      <div class="flex flex-wrap gap-2">
+        @for (categoryKey of categoryKeys; track trackByCategoryKey($index, categoryKey)) {
+        <span class="inline-flex items-center rounded-lg border border-primary-200 bg-primary-50 px-3 py-1.5 text-xs font-medium text-slate-700">
+          {{ 'onestop.categories.' + categoryKey | translate }}
+        </span>
+        }
       </div>
     </div>
   </div>

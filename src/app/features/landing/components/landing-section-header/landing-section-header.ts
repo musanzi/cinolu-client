@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 
@@ -9,10 +9,10 @@ import { NgClass } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LandingSectionHeader {
-  @Input() badgeKey!: string;
-  @Input() titleKey!: string;
-  @Input() titleHighlightKey?: string;
-  @Input() descriptionKey?: string;
-  @Input() descriptionParams?: Record<string, unknown>;
-  @Input() descriptionClass?: string;
+  badgeKey = input.required<string>();
+  titleKey = input.required<string>();
+  titleHighlightKey = input<string>();
+  descriptionKey = input<string>();
+  descriptionParams = input<Record<string, unknown>>();
+  descriptionClass = input<string>();
 }
