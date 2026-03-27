@@ -1,64 +1,115 @@
-<section class="relative overflow-hidden bg-primary-50">
+<section aria-labelledby="sectors-heading" class="relative overflow-hidden bg-slate-50">
   <div
-    class="absolute inset-0 pointer-events-none bg-linear-to-br from-primary-50 via-primary-100/80 to-slate-50"></div>
+    aria-hidden="true"
+    class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.12),transparent_38%),radial-gradient(circle_at_bottom_right,rgba(15,23,42,0.08),transparent_34%)]"></div>
+  <div aria-hidden="true" class="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-white/70 to-transparent"></div>
 
-  <div class="relative py-12 lg:py-20 px-8 lg:px-16 xl:px-24 2xl:px-32 max-w-screen-2xl mx-auto">
+  <div class="relative mx-auto max-w-screen-2xl px-6 py-16 sm:px-8 lg:px-16 lg:py-20 xl:px-24 2xl:px-32">
+    <h2 id="sectors-heading" class="sr-only">Secteurs strat&eacute;giques Cinolu</h2>
+
     <app-landing-section-header
       badgeKey="sectors.badge"
       titleKey="sectors.title"
       titleHighlightKey="sectors.title_highlight"
       descriptionKey="sectors.description" />
 
-    <div class="grid grid-cols-1 xl:grid-cols-[1.02fr_0.98fr] gap-6 xl:gap-8 items-stretch">
-      <div
-        class="relative min-h-[380px] lg:min-h-[500px] rounded-lg overflow-hidden bg-slate-900 shadow-[0_18px_60px_rgba(15,23,42,0.16)]">
-        <img [src]="featureImage" alt="Secteurs Cinolu" class="absolute inset-0 h-full w-full object-cover" />
-        <div class="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-900/40 to-slate-900/10"></div>
+    <div class="grid gap-6 xl:grid-cols-[minmax(0,1.04fr)_minmax(0,0.96fr)] xl:items-stretch">
+      <article
+        class="relative isolate overflow-hidden rounded-lg border border-slate-200/70 bg-slate-950 shadow-[0_24px_70px_rgba(15,23,42,0.18)]"
+        [attr.aria-label]="showcase.title">
+        <img
+          [src]="showcase.imageUrl"
+          [alt]="showcase.imageAlt"
+          class="absolute inset-0 h-full w-full object-cover"
+          decoding="async"
+          loading="lazy" />
+        <div aria-hidden="true" class="absolute inset-0 bg-linear-to-br from-slate-950/20 via-slate-950/35 to-slate-950/85"></div>
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.22),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(34,197,94,0.16),transparent_32%)]"></div>
 
-        <div class="absolute inset-x-0 bottom-0 p-5 lg:p-6 text-white">
-          <div class="max-w-xl rounded-lg border border-white/10 bg-white/10 backdrop-blur-md p-5 lg:p-6">
-            <p class="text-xs uppercase tracking-[0.18em] text-white/70 mb-2">Cinolu ecosystem</p>
-            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight tracking-tight">
-              Des secteurs plus lisibles, plus clairs, plus crédibles.
+        <div class="relative flex min-h-[380px] flex-col justify-between p-6 sm:p-8 lg:min-h-[540px] lg:p-10">
+          <div class="flex flex-wrap items-center gap-3 text-white/90">
+            <span
+              class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] backdrop-blur-md">
+              <span class="size-2 rounded-full bg-emerald-300"></span>
+              {{ showcase.eyebrow }}
+            </span>
+
+            <span
+              class="inline-flex rounded-full border border-white/10 bg-slate-950/35 px-4 py-2 text-xs font-medium text-white/75 backdrop-blur-sm">
+              {{ sectors.length | number:'2.0' }} secteurs prioritaires
+            </span>
+          </div>
+
+          <div
+            class="max-w-2xl rounded-lg border border-white/12 bg-white/10 p-6 text-white shadow-[0_20px_50px_rgba(15,23,42,0.25)] backdrop-blur-xl sm:p-7 lg:p-8">
+            <p class="text-sm font-medium uppercase tracking-[0.16em] text-white/70">Structure lisible. Impact local.</p>
+
+            <h3 class="mt-4 text-2xl font-black leading-tight tracking-tight sm:text-3xl lg:text-[2.6rem]">
+              {{ showcase.title }}
             </h3>
-            <p class="mt-3 text-sm sm:text-base leading-6 text-white/82 max-w-lg">
-              Une présentation resserrée pour mieux structurer l’offre sans alourdir la landing page.
+
+            <p class="mt-4 max-w-xl text-sm leading-6 text-white/82 sm:text-base">
+              {{ showcase.description }}
             </p>
           </div>
         </div>
-      </div>
+      </article>
 
-      <div class="relative flex flex-col justify-center gap-4 lg:gap-5">
-        @for (sector of sectors(); track trackBySectorId($index, sector)) {
-        <article class="sector-card group opacity-0 relative">
-          <div
-            class="relative rounded-lg border border-white/80 bg-white p-5 lg:p-6 shadow-[0_12px_32px_rgba(15,23,42,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_44px_rgba(15,23,42,0.12)]">
+      <ol class="grid gap-4 lg:gap-5" aria-label="Secteurs cl&eacute;s de l&rsquo;&eacute;cosyst&egrave;me Cinolu">
+        @for (sector of sectors; track sector.id) {
+        <li>
+          <article
+            #sectorCard
+            class="group relative translate-y-6 opacity-0 transition-all duration-700 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100"
+            [style.transition-delay.ms]="$index * revealDelayStepMs">
             <div
-              class="absolute -top-3 left-5 flex h-9 w-9 items-center justify-center rounded-full bg-primary-600 text-xs font-bold text-white shadow-lg">
-              {{ $index + 1 | number:'2.0' }}
-            </div>
+              class="relative overflow-hidden rounded-lg border border-slate-200/80 bg-white/90 p-5 shadow-[0_16px_40px_rgba(15,23,42,0.06)] ring-1 ring-white/70 backdrop-blur-sm transition duration-300 group-hover:-translate-y-1 group-hover:border-primary-200 group-hover:shadow-[0_22px_54px_rgba(15,23,42,0.12)] sm:p-6">
+              <div aria-hidden="true" class="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary-300/70 to-transparent"></div>
 
-            <div class="mt-4 flex items-start justify-between gap-4">
-              <div
-                class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary-50 text-primary-600 border border-primary-100">
-                <i-lucide [name]="sector.icon" class="size-5"></i-lucide>
+              <div class="flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-4">
+                <div class="flex items-center gap-3 sm:flex-col sm:items-start sm:gap-4">
+                  <div
+                    class="inline-flex size-12 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary-600 ring-1 ring-primary-100">
+                    <i-lucide [name]="sector.icon" class="size-5" aria-hidden="true"></i-lucide>
+                  </div>
+
+                  <div class="inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-slate-950 text-xs font-bold tracking-[0.18em] text-white">
+                    {{ $index + 1 | number:'2.0' }}
+                  </div>
+                </div>
+
+                <div class="min-w-0 flex-1">
+                  <div class="flex flex-wrap items-start justify-between gap-3">
+                    <span
+                      class="inline-flex rounded-full border border-primary-100 bg-primary-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-primary-700">
+                      {{ sector.tag }}
+                    </span>
+
+                    <span
+                      aria-hidden="true"
+                      class="inline-flex size-10 items-center justify-center rounded-full border border-slate-200 text-slate-400 transition duration-300 group-hover:border-primary-200 group-hover:bg-primary-50 group-hover:text-primary-600">
+                      <i-lucide
+                        [name]="arrowIcon"
+                        class="size-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"></i-lucide>
+                    </span>
+                  </div>
+
+                  <h3 class="mt-4 text-xl font-black tracking-tight text-slate-950 sm:text-[1.35rem]">
+                    {{ sector.name }}
+                  </h3>
+
+                  <p class="mt-3 text-sm leading-6 text-slate-600 sm:text-[15px]">
+                    {{ sector.description }}
+                  </p>
+                </div>
               </div>
-
-              <div
-                class="mb-2 inline-flex rounded-full bg-slate-100 px-3 py-1 text-[11px] font-semibold tracking-wide text-slate-600">
-                {{ sector.tag }}
-              </div>
             </div>
-
-            <div class="mt-4">
-              <h3 class="text-xl lg:text-2xl font-bold leading-tight text-slate-950">{{ sector.name }}</h3>
-
-              <p class="mt-2 text-sm lg:text-[15px] leading-6 text-slate-600 line-clamp-2">{{ sector.description }}</p>
-            </div>
-          </div>
-        </article>
+          </article>
+        </li>
         }
-      </div>
+      </ol>
     </div>
   </div>
 </section>
