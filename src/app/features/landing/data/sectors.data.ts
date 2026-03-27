@@ -18,8 +18,8 @@ export interface SectorShowcase {
 
 export const SECTOR_SHOWCASE: SectorShowcase = {
   eyebrow: 'Cinolu ecosystem',
-  title: 'Des secteurs plus lisibles, plus clairs, plus crédibles.',
-  description: "Une présentation resserrée pour mieux structurer l'offre sans alourdir la landing page.",
+  title: 'Les secteurs dans lesquels Cinolu agit concrètement.',
+  description: "Explorez les principaux secteurs dans lesquels Cinolu accompagne les porteurs de projets, entreprises et talents.",
   imageAlt: 'Secteurs stratégiques Cinolu',
   imageUrl: '/images/hero.jpg'
 };
