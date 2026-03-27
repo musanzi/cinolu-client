@@ -87,7 +87,6 @@ export interface IProject extends IBase {
   metrics: IMetric[];
   participants: IUser[];
   phases: IPhase[];
-  /** Mapped count (loadRelationCountAndMap) */
   participantsCount?: number;
 }
 

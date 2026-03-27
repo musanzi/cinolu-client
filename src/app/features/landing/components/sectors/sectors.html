@@ -1,11 +1,10 @@
 <section aria-labelledby="sectors-heading" class="relative overflow-hidden bg-slate-50">
   <div
-    aria-hidden="true"
     class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.12),transparent_38%),radial-gradient(circle_at_bottom_right,rgba(15,23,42,0.08),transparent_34%)]"></div>
-  <div aria-hidden="true" class="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-white/70 to-transparent"></div>
+  <div class="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-white/70 to-transparent"></div>
 
   <div class="relative mx-auto max-w-screen-2xl px-6 py-16 sm:px-8 lg:px-16 lg:py-20 xl:px-24 2xl:px-32">
-    <h2 id="sectors-heading" class="sr-only">Secteurs strat&eacute;giques Cinolu</h2>
+    <h2 id="sectors-heading" class="sr-only">Secteurs stratégiques Cinolu</h2>
 
     <app-landing-section-header
       badgeKey="sectors.badge"
@@ -23,9 +22,8 @@
           class="absolute inset-0 h-full w-full object-cover"
           decoding="async"
           loading="lazy" />
-        <div aria-hidden="true" class="absolute inset-0 bg-linear-to-br from-slate-950/20 via-slate-950/35 to-slate-950/85"></div>
+        <div class="absolute inset-0 bg-linear-to-br from-slate-950/20 via-slate-950/35 to-slate-950/85"></div>
         <div
-          aria-hidden="true"
           class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.22),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(34,197,94,0.16),transparent_32%)]"></div>
 
         <div class="relative flex min-h-[380px] flex-col justify-between p-6 sm:p-8 lg:min-h-[540px] lg:p-10">
@@ -44,20 +42,20 @@
 
           <div
             class="max-w-2xl rounded-lg border border-white/12 bg-white/10 p-6 text-white shadow-[0_20px_50px_rgba(15,23,42,0.25)] backdrop-blur-xl sm:p-7 lg:p-8">
-            <p class="text-sm font-medium uppercase tracking-[0.16em] text-white/70">Structure lisible. Impact local.</p>
+            <p class="text-sm font-medium uppercase tracking-[0.16em] text-white/70">
+              Structure lisible. Impact local.
+            </p>
 
             <h3 class="mt-4 text-2xl font-black leading-tight tracking-tight sm:text-3xl lg:text-[2.6rem]">
               {{ showcase.title }}
             </h3>
 
-            <p class="mt-4 max-w-xl text-sm leading-6 text-white/82 sm:text-base">
-              {{ showcase.description }}
-            </p>
+            <p class="mt-4 max-w-xl text-sm leading-6 text-white/82 sm:text-base">{{ showcase.description }}</p>
           </div>
         </div>
       </article>
 
-      <ol class="grid gap-4 lg:gap-5" aria-label="Secteurs cl&eacute;s de l&rsquo;&eacute;cosyst&egrave;me Cinolu">
+      <ol class="grid gap-4 lg:gap-5">
         @for (sector of sectors; track sector.id) {
         <li>
           <article
@@ -66,16 +64,18 @@
             [style.transition-delay.ms]="$index * revealDelayStepMs">
             <div
               class="relative overflow-hidden rounded-lg border border-slate-200/80 bg-white/90 p-5 shadow-[0_16px_40px_rgba(15,23,42,0.06)] ring-1 ring-white/70 backdrop-blur-sm transition duration-300 group-hover:-translate-y-1 group-hover:border-primary-200 group-hover:shadow-[0_22px_54px_rgba(15,23,42,0.12)] sm:p-6">
-              <div aria-hidden="true" class="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary-300/70 to-transparent"></div>
+              <div
+                class="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary-300/70 to-transparent"></div>
 
               <div class="flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-4">
                 <div class="flex items-center gap-3 sm:flex-col sm:items-start sm:gap-4">
                   <div
                     class="inline-flex size-12 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary-600 ring-1 ring-primary-100">
-                    <i-lucide [name]="sector.icon" class="size-5" aria-hidden="true"></i-lucide>
+                    <i-lucide [name]="sector.icon" class="size-5"></i-lucide>
                   </div>
 
-                  <div class="inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-slate-950 text-xs font-bold tracking-[0.18em] text-white">
+                  <div
+                    class="inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-slate-950 text-xs font-bold tracking-[0.18em] text-white">
                     {{ $index + 1 | number:'2.0' }}
                   </div>
                 </div>
@@ -88,7 +88,6 @@
                     </span>
 
                     <span
-                      aria-hidden="true"
                       class="inline-flex size-10 items-center justify-center rounded-full border border-slate-200 text-slate-400 transition duration-300 group-hover:border-primary-200 group-hover:bg-primary-50 group-hover:text-primary-600">
                       <i-lucide
                         [name]="arrowIcon"
@@ -96,13 +95,11 @@
                     </span>
                   </div>
 
-                  <h3 class="mt-4 text-xl font-black tracking-tight text-slate-950 sm:text-[1.35rem]">
+                  <h3 class="mt-4 text-xl font-satoshi font-black tracking-tight text-slate-950 sm:text-[1.35rem]">
                     {{ sector.name }}
                   </h3>
 
-                  <p class="mt-3 text-sm leading-6 text-slate-600 sm:text-[15px]">
-                    {{ sector.description }}
-                  </p>
+                  <p class="mt-3 text-sm leading-6 text-slate-600 sm:text-[15px]">{{ sector.description }}</p>
                 </div>
               </div>
             </div>

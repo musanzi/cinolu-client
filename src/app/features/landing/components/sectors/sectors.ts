@@ -8,24 +8,9 @@ import {
   viewChildren
 } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-import { LucideAngularModule, LucideIconData, MoveUpRight, Pickaxe, Sprout, Users } from 'lucide-angular';
+import { LucideAngularModule, MoveUpRight } from 'lucide-angular';
+import { SECTORS, SECTOR_SHOWCASE } from '@features/landing/data/sectors.data';
 import { LandingSectionHeader } from '../landing-section-header/landing-section-header';
-
-interface SectorCard {
-  readonly id: string;
-  readonly name: string;
-  readonly description: string;
-  readonly icon: LucideIconData;
-  readonly tag: string;
-}
-
-interface SectorShowcase {
-  readonly eyebrow: string;
-  readonly title: string;
-  readonly description: string;
-  readonly imageAlt: string;
-  readonly imageUrl: string;
-}
 
 @Component({
   selector: 'app-sectors',
@@ -40,42 +25,8 @@ export class Sectors {
   readonly arrowIcon = MoveUpRight;
   readonly revealDelayStepMs = 120;
 
-  readonly showcase: SectorShowcase = {
-    eyebrow: 'Cinolu ecosystem',
-    title: 'Des secteurs plus lisibles, plus clairs, plus cr\u00e9dibles.',
-    description:
-      'Une pr\u00e9sentation resserr\u00e9e pour mieux structurer l\u2019offre sans alourdir la landing page.',
-    imageAlt: 'Secteurs strat\u00e9giques Cinolu',
-    imageUrl:
-      'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&h=1400&fit=crop&crop=faces'
-  };
-
-  readonly sectors: readonly SectorCard[] = [
-    {
-      id: 'mintech',
-      name: 'MinTech',
-      description:
-        'Des solutions tech pour moderniser la cha\u00eene mini\u00e8re et encourager une exploitation plus durable.',
-      icon: Pickaxe,
-      tag: 'Technologie mini\u00e8re'
-    },
-    {
-      id: 'greentech',
-      name: 'GreenTech & AgriTech',
-      description:
-        'Des solutions concr\u00e8tes pour l\u2019agriculture, le climat et la transition \u00e9cologique \u00e0 fort impact local.',
-      icon: Sprout,
-      tag: 'Innovation verte'
-    },
-    {
-      id: 'gender-inclusion',
-      name: 'Gender Inclusion',
-      description:
-        'Des initiatives qui r\u00e9duisent les barri\u00e8res et ouvrent plus d\u2019opportunit\u00e9s aux femmes entrepreneures.',
-      icon: Users,
-      tag: '\u00c9galit\u00e9 & inclusion'
-    }
-  ];
+  readonly showcase = SECTOR_SHOWCASE;
+  readonly sectors = SECTORS;
 
   constructor() {
     afterNextRender(() => {
