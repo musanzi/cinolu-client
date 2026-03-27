@@ -78,11 +78,23 @@ export class AcceptedPrograms implements OnInit {
     this.participationsStore.myParticipations();
   }
 
+  private isQualifiedParticipation(participation: IParticipation): boolean {
+    const latestReview = [...(participation.reviews ?? [])].sort(
+      (a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+    )[0];
+
+    if (latestReview) {
+      return latestReview.score >= 60;
+    }
+
+    return participation.status === 'qualified';
+  }
+
   private isValidForAcceptedPrograms(participation: IParticipation): boolean {
     const project = participation.project;
     if (!project) return false;
     const projectPhases = project.phases ?? [];
-    return projectPhases.length >= 1 && participation.status === 'qualified';
+    return projectPhases.length >= 1 && this.isQualifiedParticipation(participation);
   }
 
   analyzeParticipation(participation: IParticipation): ParticipationAnalysis {

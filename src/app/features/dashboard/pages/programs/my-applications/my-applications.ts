@@ -3,7 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ParticipationsStore } from '../../../store/participations.store';
 import { ApiImgPipe } from '../../../../../shared/pipes/api-img.pipe';
-import { IParticipation, ParticipationReviewStatus } from '../../../../../shared/models/entities.models';
+import {
+  IParticipation,
+  IProjectParticipationReview,
+  ParticipationReviewStatus
+} from '../../../../../shared/models/entities.models';
 import {
   ArrowRight,
   BadgeCheck,
@@ -48,11 +52,34 @@ export class MyApplications implements OnInit {
     this.participationsStore.myParticipations();
   }
 
+  private getLatestReview(participation: IParticipation): IProjectParticipationReview | null {
+    const reviews = participation.reviews ?? [];
+    if (!reviews.length) return null;
+    return [...reviews].sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())[0] ?? null;
+  }
+
   getApplicationStatus(participation: IParticipation): { label: string; classes: string; icon: LucideIconData } {
     if (!participation?.project) {
       return {
         label: 'Indisponible',
         classes: 'bg-slate-100 text-slate-500 border border-slate-200',
+        icon: this.icons.cancel
+      };
+    }
+
+    const latestReview = this.getLatestReview(participation);
+    if (latestReview) {
+      if (latestReview.score >= 60) {
+        return {
+          label: 'Qualifié',
+          classes: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
+          icon: this.icons.verified
+        };
+      }
+
+      return {
+        label: 'Non retenu',
+        classes: 'bg-red-50 text-red-700 border border-red-200',
         icon: this.icons.cancel
       };
     }
@@ -91,6 +118,18 @@ export class MyApplications implements OnInit {
           icon: this.icons.schedule
         };
     }
+  }
+
+  getLatestReviewMessage(participation: IParticipation): string | null {
+    return this.getLatestReview(participation)?.message ?? participation.review_message ?? null;
+  }
+
+  getLatestReviewerName(participation: IParticipation): string | null {
+    return this.getLatestReview(participation)?.reviewer?.name ?? participation.reviewed_by?.name ?? null;
+  }
+
+  getLatestReviewScore(participation: IParticipation): number | null {
+    return this.getLatestReview(participation)?.score ?? null;
   }
 
   hasMultiplePhases(participation: IParticipation): boolean {

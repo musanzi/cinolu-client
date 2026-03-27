@@ -4,7 +4,12 @@ import { CommonModule, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiImgPipe } from '@shared/pipes/api-img.pipe';
 import { MentorshipStore } from '../../../store/mentorship.store';
-import { IPhase, ParticipationReviewStatus } from '@shared/models/entities.models';
+import {
+  IPhase,
+  IProjectParticipation,
+  IProjectParticipationReview,
+  ParticipationReviewStatus
+} from '@shared/models/entities.models';
 import {
   ArrowLeft,
   CalendarDays,
@@ -144,6 +149,22 @@ export class MentoredProjectDetail implements OnInit, OnDestroy {
 
   onTabChange(tab: 'participations' | 'resources'): void {
     this.activeTab.set(tab);
+  }
+
+  private getLatestReview(participation: IProjectParticipation): IProjectParticipationReview | null {
+    const reviews = participation.reviews ?? [];
+    if (!reviews.length) return null;
+    return [...reviews].sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())[0] ?? null;
+  }
+
+  getParticipationReviewStatus(participation: IProjectParticipation): ParticipationReviewStatus {
+    const latestReview = this.getLatestReview(participation);
+
+    if (latestReview) {
+      return latestReview.score >= 60 ? 'qualified' : 'disqualified';
+    }
+
+    return participation.status ?? 'pending';
   }
 
   getReviewStatusMeta(status?: ParticipationReviewStatus): { label: string; classes: string } {

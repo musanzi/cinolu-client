@@ -4,7 +4,11 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { catchError, of, pipe, switchMap, tap } from 'rxjs';
 import { ToastrService } from '@core/services/toast/toastr.service';
 import { IParticipation, IProject, ParticipationReviewStatus } from '@shared/models/entities.models';
-import { MentorParticipationsFilter, MentorshipService } from '../services/mentorship.service';
+import {
+  MentorParticipationsFilter,
+  MentorshipService,
+  ParticipationReviewPayload
+} from '../services/mentorship.service';
 
 interface IMentorshipStore {
   mentoredProjects: IProject[];
@@ -19,6 +23,7 @@ interface IMentorshipStore {
   isLoading: boolean;
   isLoadingParticipations: boolean;
   isLoadingDetail: boolean;
+  isSubmittingReview: boolean;
 }
 
 export const MentorshipStore = signalStore(
@@ -35,7 +40,8 @@ export const MentorshipStore = signalStore(
     filterStatus: '',
     isLoading: false,
     isLoadingParticipations: false,
-    isLoadingDetail: false
+    isLoadingDetail: false,
+    isSubmittingReview: false
   }),
   withProps(() => ({
     _service: inject(MentorshipService),
@@ -99,7 +105,6 @@ export const MentorshipStore = signalStore(
           const page = filter?.page ?? 1;
           return _service.getMentoredProjectParticipations(projectId, filter).pipe(
             tap(([participations, total]) => {
-              // append if loading next page, replace otherwise
               const existing = page > 1 ? store.participations() : [];
               patchState(store, {
                 participations: [...existing, ...participations],
@@ -118,7 +123,7 @@ export const MentorshipStore = signalStore(
       )
     ),
 
-    loadParticipationDetail: rxMethod<{  participationId: string }>(
+    loadParticipationDetail: rxMethod<{ participationId: string }>(
       pipe(
         tap(() => patchState(store, { isLoadingDetail: true, selectedParticipation: null })),
         switchMap(({ participationId }) =>
@@ -129,6 +134,49 @@ export const MentorshipStore = signalStore(
             catchError((err) => {
               patchState(store, { isLoadingDetail: false });
               _toast.showError(err.error?.message || 'Candidature introuvable');
+              return of(null);
+            })
+          )
+        )
+      )
+    ),
+
+    submitParticipationReview: rxMethod<{
+      participationId: string;
+      payload: ParticipationReviewPayload;
+      refreshProjectId?: string;
+      refreshFilter?: MentorParticipationsFilter;
+    }>(
+      pipe(
+        tap(() => patchState(store, { isSubmittingReview: true })),
+        switchMap(({ participationId, payload, refreshProjectId, refreshFilter }) =>
+          _service.submitParticipationReview(participationId, payload).pipe(
+            switchMap(() => _service.getMentoredProjectParticipation(participationId)),
+            tap((participation) => {
+              const updatedParticipations = store.participations().map((item) =>
+                item.id === participation.id ? participation : item
+              );
+
+              patchState(store, {
+                selectedParticipation: participation,
+                participations: updatedParticipations,
+                isSubmittingReview: false
+              });
+
+              if (refreshProjectId) {
+                _service.getMentoredProjectParticipations(refreshProjectId, refreshFilter ?? {}).subscribe({
+                  next: ([participations, total]) => {
+                    patchState(store, { participations, totalParticipations: total });
+                  },
+                  error: () => undefined
+                });
+              }
+
+              _toast.showSuccess('Revue enregistrée avec succès');
+            }),
+            catchError((err) => {
+              patchState(store, { isSubmittingReview: false });
+              _toast.showError(err.error?.message || 'Impossible d’enregistrer la revue');
               return of(null);
             })
           )

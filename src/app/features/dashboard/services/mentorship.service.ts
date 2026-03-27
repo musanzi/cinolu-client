@@ -2,7 +2,12 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IParticipation, IProject, ParticipationReviewStatus } from '@shared/models/entities.models';
+import {
+  IParticipation,
+  IProject,
+  IProjectParticipationReview,
+  ParticipationReviewStatus
+} from '@shared/models/entities.models';
 
 export interface MentorParticipationsFilter {
   page?: number;
@@ -10,6 +15,22 @@ export interface MentorParticipationsFilter {
   phaseId?: string;
   status?: ParticipationReviewStatus;
 }
+
+export interface CreateParticipationReviewPayload {
+  phaseId: string;
+  score: number;
+  message?: string;
+  notifyParticipant?: boolean;
+}
+
+export interface UpdateParticipationReviewPayload {
+  reviewId: string;
+  score: number;
+  message?: string;
+  notifyParticipant?: boolean;
+}
+
+export type ParticipationReviewPayload = CreateParticipationReviewPayload | UpdateParticipationReviewPayload;
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +68,22 @@ export class MentorshipService {
   getMentoredProjectParticipation(participationId: string): Observable<IParticipation> {
     return this._http
       .get<{ data: IParticipation }>(`projects/participations/${participationId}`)
+      .pipe(map((res) => res.data));
+  }
+
+  submitParticipationReview(
+    participationId: string,
+    payload: ParticipationReviewPayload
+  ): Observable<IProjectParticipationReview> {
+    if ('reviewId' in payload && payload.reviewId) {
+      const { reviewId, ...body } = payload;
+      return this._http
+        .patch<{ data: IProjectParticipationReview }>(`projects/participations/${participationId}/review/${reviewId}`, body)
+        .pipe(map((res) => res.data));
+    }
+
+    return this._http
+      .post<{ data: IProjectParticipationReview }>(`projects/participations/${participationId}/review`, payload)
       .pipe(map((res) => res.data));
   }
 }

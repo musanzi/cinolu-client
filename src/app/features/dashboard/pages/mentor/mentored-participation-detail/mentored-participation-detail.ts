@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy, ChangeDetectionStrategy, computed } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, ChangeDetectionStrategy, computed, signal } from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
 import { ApiImgPipe } from '@shared/pipes/api-img.pipe';
 import { MentorshipStore } from '../../../store/mentorship.store';
@@ -26,10 +26,12 @@ import {
   User
 } from 'lucide-angular';
 import { ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { IPhase, IProjectParticipationReview, ParticipationReviewStatus } from '@shared/models/entities.models';
 
 @Component({
   selector: 'app-mentored-participation-detail',
-  imports: [NgClass, ApiImgPipe, CommonModule, LucideAngularModule],
+  imports: [NgClass, ApiImgPipe, CommonModule, LucideAngularModule, FormsModule],
   templateUrl: './mentored-participation-detail.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -62,10 +64,19 @@ export class MentoredParticipationDetail implements OnInit, OnDestroy {
   participationId!: string;
 
   apiUrl = environment.apiUrl;
+  selectedReviewPhaseId = signal<string>('');
+  reviewScore = signal<number | null>(null);
+  reviewMessage = signal<string>('');
+  notifyParticipant = signal<boolean>(false);
 
   completedPhaseIds = computed<Set<string>>(() => {
     const p = this.mentorshipStore.selectedParticipation();
     return new Set(p?.phases?.map((ph) => ph.id) ?? []);
+  });
+
+  reviewsByPhase = computed<Map<string, IProjectParticipationReview>>(() => {
+    const reviews = this.mentorshipStore.selectedParticipation()?.reviews ?? [];
+    return new Map(reviews.map((review) => [review.phase?.id, review]));
   });
 
   getPhaseStatus(phaseId: string, started_at: Date, ended_at: Date): 'completed' | 'active' | 'future' | 'past' {
@@ -104,6 +115,79 @@ export class MentoredParticipationDetail implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.mentorshipStore.clearSelectedParticipation();
+  }
+
+  getSortedProjectPhases(projectPhases: IPhase[]): IPhase[] {
+    return [...projectPhases].sort((a, b) => new Date(a.started_at).getTime() - new Date(b.started_at).getTime());
+  }
+
+  getReviewForPhase(phaseId: string): IProjectParticipationReview | undefined {
+    return this.reviewsByPhase().get(phaseId);
+  }
+
+  selectReviewPhase(phaseId: string): void {
+    this.selectedReviewPhaseId.set(phaseId);
+    const review = this.getReviewForPhase(phaseId);
+    this.reviewScore.set(review?.score ?? null);
+    this.reviewMessage.set(review?.message ?? '');
+    this.notifyParticipant.set(false);
+  }
+
+  submitReview(): void {
+    const participation = this.mentorshipStore.selectedParticipation();
+    const project = participation?.project;
+    const phaseId = this.selectedReviewPhaseId();
+    const score = this.reviewScore();
+
+    if (
+      !participation ||
+      !project ||
+      !phaseId ||
+      score === null ||
+      !Number.isInteger(score) ||
+      score < 0 ||
+      score > 100
+    ) {
+      return;
+    }
+
+    const message = this.reviewMessage().trim();
+    const existingReview = this.getReviewForPhase(phaseId);
+
+    this.mentorshipStore.submitParticipationReview({
+      participationId: participation.id,
+      payload: existingReview
+        ? {
+            reviewId: existingReview.id,
+            score,
+            message: message || undefined,
+            notifyParticipant: this.notifyParticipant()
+          }
+        : {
+            phaseId,
+            score,
+            message: message || undefined,
+            notifyParticipant: this.notifyParticipant()
+          },
+      refreshProjectId: project.id,
+      refreshFilter: {
+        page: 1
+      }
+    });
+  }
+
+  getParticipationStatus(): ParticipationReviewStatus {
+    const participation = this.mentorshipStore.selectedParticipation();
+    const reviews = participation?.reviews ?? [];
+    const latestReview = [...reviews].sort(
+      (a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+    )[0];
+
+    if (latestReview) {
+      return latestReview.score >= 60 ? 'qualified' : 'disqualified';
+    }
+
+    return participation?.status ?? 'pending';
   }
 
   getReviewStatusMeta(status?: string): { label: string; classes: string } {

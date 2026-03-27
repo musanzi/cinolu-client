@@ -389,34 +389,45 @@ export interface IMentee extends IBase {
   progress_notes?: string;
 }
 
-export type ParticipationReviewStatus = 'pending' | 'in_review' | 'qualified' | 'disqualified' | 'info_requested';
-
-export interface IParticipationUpvote {
-  user: Pick<IUser, 'id'>;
+export interface IProjectParticipationUpvote extends IBase {
+  user: IUser;
+  participation: IProjectParticipation;
 }
 
-export interface IParticipationReviewer {
-  id: string;
-  name: string;
-  email: string;
-  profile?: string | null;
+export interface IProjectParticipationReview extends IBase {
+  participation: IProjectParticipation;
+  phase: IPhase;
+  reviewer: IUser;
+  message: string | null;
+  score: number;
 }
 
-export interface IParticipation extends IBase {
-  user?: IUser;
+export interface IProjectParticipation extends IBase {
+  user: IUser;
   project: IProject;
-  phases?: IPhase[];
   venture: IVenture | null;
-  upvotes?: IParticipationUpvote[];
-  deliverable_submissions?: IDeliverableSubmission[];
+  phases: IPhase[];
+  upvotes?: IProjectParticipationUpvote[];
   upvotesCount?: number;
+  isUpvoted?: boolean;
+  reviews: IProjectParticipationReview[];
+  deliverable_submissions?: IDeliverableSubmission[];
   status?: ParticipationReviewStatus;
   review_message?: string | null;
   reviewed_at?: Date | string | null;
-  reviewed_by?: IParticipationReviewer | null;
+  reviewed_by?: Pick<IUser, 'id' | 'name' | 'email' | 'profile'> | null;
 }
 
-export interface IParticipationWithVote extends IParticipation {
+export interface IEventParticipation extends IBase {
+  user: IUser;
+  event: IEvent;
+}
+
+export type IParticipation = IProjectParticipation;
+
+export type ParticipationReviewStatus = 'pending' | 'in_review' | 'qualified' | 'disqualified' | 'info_requested';
+
+export interface IParticipationWithVote extends IProjectParticipation {
   voteCount: number;
   hasUserVoted: boolean;
 }

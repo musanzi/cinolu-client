@@ -174,7 +174,7 @@
     } @else if (mentorshipStore.participations().length > 0) {
     <ul class="divide-y divide-slate-100">
       @for (participation of mentorshipStore.participations(); track participation.id; let i = $index) { @let
-      completedPhases = participation.phases?.length ?? 0; @let totalPhases = project.phases.length || 0; @let progress
+      completedPhases = participation.phases.length; @let totalPhases = project.phases.length || 0; @let progress
       = getProgress(completedPhases, totalPhases);
 
       <li class="py-4 first:pt-0 last:pb-0">
@@ -197,9 +197,9 @@
 
           <div class="flex-1 min-w-0">
             <p class="font-semibold text-sm text-slate-900 group-hover:text-primary-700 truncate transition-colors">
-              {{ participation.user?.name ?? 'Utilisateur inconnu' }}
+              {{ participation.user.name }}
             </p>
-            <p class="text-xs text-slate-500 truncate">{{ participation.user?.email }}</p>
+            <p class="text-xs text-slate-500 truncate">{{ participation.user.email }}</p>
           </div>
 
           @if (participation.venture) {
@@ -217,9 +217,9 @@
           <div class="flex flex-col items-end gap-2 shrink-0">
             <span
               class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium border"
-              [ngClass]="getReviewStatusMeta(participation.status).classes">
+              [ngClass]="getReviewStatusMeta(getParticipationReviewStatus(participation)).classes">
               <i-lucide [name]="icons.review" [size]="12" />
-              {{ getReviewStatusMeta(participation.status).label }}
+              {{ getReviewStatusMeta(getParticipationReviewStatus(participation)).label }}
             </span>
             <div class="flex items-center gap-2">
               <div class="w-20 h-1.5 bg-slate-100 rounded-full overflow-hidden">

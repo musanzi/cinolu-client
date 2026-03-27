@@ -8,13 +8,13 @@
         <header class="flex items-start gap-4 mb-5">
           <img
             [src]="p.user | apiIMG: 'user'"
-            [alt]="p.user?.name ?? ''"
+            [alt]="p.user.name"
             width="48"
             height="48"
             class="size-12 shrink-0 rounded-lg object-cover border border-gray-100 bg-gray-50" />
           <div class="min-w-0 flex-1">
-            <h4 class="font-semibold text-gray-900 truncate">{{ p.user?.name ?? '—' }}</h4>
-            <p class="text-sm text-gray-500 truncate mt-0.5">{{ p.user?.country ?? '—' }}</p>
+            <h4 class="font-semibold text-gray-900 truncate">{{ p.user.name }}</h4>
+            <p class="text-sm text-gray-500 truncate mt-0.5">{{ p.user.country }}</p>
             @if (p.venture.sector || '—') {
             <span
               class="inline-block mt-2 px-2.5 py-1 rounded-full text-xs font-medium bg-primary-50 text-primary-700 border border-primary-100">
@@ -40,10 +40,10 @@
               <i-lucide [name]="icons.mapPin" class="size-3.5 text-gray-400"></i-lucide>
               {{ p.venture.location || '—' }}
             </span>
-            } @if (p.phases?.length) {
+            } @if (p.phases.length) {
             <span class="inline-flex items-center gap-1.5">
               <i-lucide [name]="icons.layers" class="size-3.5 text-gray-400"></i-lucide>
-              {{ p.phases?.[0]?.name }}
+              {{ p.phases[0].name }}
             </span>
             }
           </div>
@@ -89,15 +89,19 @@
             }
           </div>
           <div class="flex flex-wrap items-center gap-2">
-            @if (p.status === 'qualified') {
+            @if (getParticipationStatus(p) === 'qualified') {
             <span class="inline-flex items-center gap-1 rounded-lg bg-emerald-50 border border-emerald-100 px-3 py-2 text-sm font-medium text-emerald-700">
               Qualifié
             </span>
-            } @else if (p.status === 'in_review') {
+            } @else if (getParticipationStatus(p) === 'disqualified') {
+            <span class="inline-flex items-center gap-1 rounded-lg bg-red-50 border border-red-100 px-3 py-2 text-sm font-medium text-red-700">
+              Non retenu
+            </span>
+            } @else if (getParticipationStatus(p) === 'in_review') {
             <span class="inline-flex items-center gap-1 rounded-lg bg-blue-50 border border-blue-100 px-3 py-2 text-sm font-medium text-blue-700">
               En revue
             </span>
-            } @else if (p.status === 'info_requested') {
+            } @else if (getParticipationStatus(p) === 'info_requested') {
             <span class="inline-flex items-center gap-1 rounded-lg bg-amber-50 border border-amber-100 px-3 py-2 text-sm font-medium text-amber-700">
               Infos demandées
             </span>
