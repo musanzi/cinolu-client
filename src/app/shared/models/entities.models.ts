@@ -5,6 +5,13 @@ interface IBase {
   deleted_at: Date;
 }
 
+export enum UserStatus {
+  ENTREPRENEUR = 'entrepreneur',
+  INVESTOR = 'investor',
+  PARTNER = 'partner',
+  OTHER = 'other'
+}
+
 export interface ITag extends IBase {
   name: string;
 }
@@ -45,6 +52,7 @@ export interface IUser extends IBase {
   name: string;
   password: string;
   biography: string;
+  status?: UserStatus | null;
   phone_number: string;
   city: string;
   country: string;

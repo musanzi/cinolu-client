@@ -16,193 +16,88 @@
       </div>
 
       <form [formGroup]="form" class="space-y-4 md:space-y-6" (ngSubmit)="onSignUp()">
-        <app-form-manager
-          #formManager
-          [form]="form"
-          [steps]="stepConfig"
-          [stickyProgress]="true"
-          [loading]="store.isLoading()">
-          @if (formManager.currentStep() === 0) {
-          <div class="space-y-6">
-            <div class="group">
-              <label for="name" class="block text-sm font-semibold text-slate-700 mb-2">
-                <span class="flex items-center gap-2">
-                  <span
-                    class="shrink-0 w-5 h-5 md:w-7 md:h-7 rounded-md bg-gradient-to-br from-primary-50 to-primary-100/50 border border-primary-200/60 flex items-center justify-center group-focus-within:from-primary-100 group-focus-within:to-primary-200/50 group-focus-within:border-primary-300 transition-all duration-200">
-                    <i-lucide [name]="icons.user" class="size-3.5 md:size-5 text-primary-600" />
-                  </span>
-                  {{ 'auth.signup.form.name' | translate }}
-                </span>
-              </label>
-              <input
-                id="name"
-                formControlName="name"
-                [placeholder]="'auth.signup.form.namePlaceholder' | translate"
-                class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-primary-400 focus:ring-4 focus:ring-primary-100" />
-            </div>
-
-            <div class="group">
-              <label for="email" class="block text-sm font-semibold text-slate-700 mb-2">
-                <span class="flex items-center gap-2">
-                  <span
-                    class="shrink-0 w-5 h-5 md:w-7 md:h-7 rounded-md bg-gradient-to-br from-primary-50 to-primary-100/50 border border-primary-200/60 flex items-center justify-center group-focus-within:from-primary-100 group-focus-within:to-primary-200/50 group-focus-within:border-primary-300 transition-all duration-200">
-                    <i-lucide [name]="icons.mail" class="size-3.5 md:size-5 text-primary-600" />
-                  </span>
-                  {{ 'auth.signup.form.email' | translate }}
-                </span>
-              </label>
-              <input
-                id="email"
-                type="email"
-                formControlName="email"
-                [placeholder]="'auth.signup.form.emailPlaceholder' | translate"
-                class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-primary-400 focus:ring-4 focus:ring-primary-100" />
-            </div>
-          </div>
-          } @if (formManager.currentStep() === 1) {
+        <div class="space-y-6">
           <div class="group">
-            <label for="country" class="block text-sm font-semibold text-slate-700 mb-2">
+            <label for="email" class="block text-sm font-semibold text-slate-700 mb-2">
               <span class="flex items-center gap-2">
                 <span
                   class="shrink-0 w-5 h-5 md:w-7 md:h-7 rounded-md bg-gradient-to-br from-primary-50 to-primary-100/50 border border-primary-200/60 flex items-center justify-center group-focus-within:from-primary-100 group-focus-within:to-primary-200/50 group-focus-within:border-primary-300 transition-all duration-200">
-                  <i-lucide [name]="icons.globe" class="size-3.5 md:size-5 text-primary-600" />
+                  <i-lucide [name]="icons.mail" class="size-3.5 md:size-5 text-primary-600" />
                 </span>
-                {{ 'auth.signup.form.country' | translate }}
+                {{ 'auth.signup.form.email' | translate }}
               </span>
             </label>
-            <ui-select
-              [inputId]="'country'"
-              formControlName="country"
-              [options]="countryOptions"
-              [placeholder]="'auth.signup.form.countryPlaceholder' | translate"
-              (changed)="onSelectCountry($event)" />
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              [placeholder]="'auth.signup.form.emailPlaceholder' | translate"
+              class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-primary-400 focus:ring-4 focus:ring-primary-100" />
           </div>
-          <div class="space-y-6">
-            <div class="group">
-              <label for="phone_number" class="block text-sm font-semibold text-slate-700 mb-2">
-                <span class="flex items-center gap-2">
-                  <span
-                    class="shrink-0 w-5 h-5 md:w-7 md:h-7 rounded-md bg-gradient-to-br from-primary-50 to-primary-100/50 border border-primary-200/60 flex items-center justify-center group-focus-within:from-primary-100 group-focus-within:to-primary-200/50 group-focus-within:border-primary-300 transition-all duration-200">
-                    <i-lucide [name]="icons.phone" class="size-3.5 md:size-5 text-primary-600" />
-                  </span>
-                  {{ 'auth.signup.form.phone' | translate }}
-                </span>
-              </label>
-              <div class="flex overflow-hidden rounded-lg border border-slate-200 bg-white">
+
+          <div class="group">
+            <label for="password" class="block text-sm font-semibold text-slate-700 mb-2">
+              <span class="flex items-center gap-2">
                 <span
-                  class="inline-flex items-center border-r border-slate-200 bg-slate-50 px-4 text-sm font-medium text-slate-700">
-                  {{ formattedCountryCode }}
+                  class="shrink-0 w-5 h-5 md:w-7 md:h-7 rounded-md bg-gradient-to-br from-primary-50 to-primary-100/50 border border-primary-200/60 flex items-center justify-center group-focus-within:from-primary-100 group-focus-within:to-primary-200/50 group-focus-within:border-primary-300 transition-all duration-200">
+                  <i-lucide [name]="icons.lock" class="size-3.5 md:size-5 text-primary-600" />
                 </span>
-                <input
-                  id="phone_number"
-                  formControlName="phone_number"
-                  [placeholder]="'auth.signup.form.phonePlaceholder' | translate"
-                  class="w-full px-4 py-3 text-sm text-slate-900 outline-none" />
-              </div>
-            </div>
-
-            <div class="group">
-              <label for="gender" class="block text-sm font-semibold text-slate-700 mb-2">
-                <span class="flex items-center gap-2">
-                  <span
-                    class="shrink-0 w-5 h-5 md:w-7 md:h-7 rounded-md bg-gradient-to-br from-primary-50 to-primary-100/50 border border-primary-200/60 flex items-center justify-center group-focus-within:from-primary-100 group-focus-within:to-primary-200/50 group-focus-within:border-primary-300 transition-all duration-200">
-                    <i-lucide [name]="icons.users" class="size-3.5 md:size-5 text-primary-600" />
-                  </span>
-                  {{ 'auth.signup.form.gender' | translate }}
-                </span>
-              </label>
-              <ui-select
-                [inputId]="'gender'"
-                formControlName="gender"
-                [options]="genderOptions"
-                [placeholder]="'auth.signup.form.genderPlaceholder' | translate" />
-            </div>
-
-            <div class="group">
-              <label for="birth_date" class="block text-sm font-semibold text-slate-700 mb-2">
-                <span class="flex items-center gap-2">
-                  <span
-                    class="shrink-0 w-5 h-5 md:w-7 md:h-7 rounded-md bg-gradient-to-br from-primary-50 to-primary-100/50 border border-primary-200/60 flex items-center justify-center group-focus-within:from-primary-100 group-focus-within:to-primary-200/50 group-focus-within:border-primary-300 transition-all duration-200">
-                    <i-lucide [name]="icons.calendar" class="size-3.5 md:size-5 text-primary-600" />
-                  </span>
-                  {{ 'auth.signup.form.birthDate' | translate }}
-                </span>
-              </label>
+                {{ 'auth.signup.form.password' | translate }}
+              </span>
+            </label>
+            <div class="flex overflow-hidden rounded-lg border border-slate-200 bg-white">
               <input
-                id="birth_date"
-                type="date"
-                formControlName="birth_date"
-                [placeholder]="'auth.signup.form.birthDatePlaceholder' | translate"
-                class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-primary-400 focus:ring-4 focus:ring-primary-100" />
+                id="password"
+                [type]="showPassword() ? 'text' : 'password'"
+                formControlName="password"
+                [placeholder]="'auth.signup.form.passwordPlaceholder' | translate"
+                class="w-full px-4 py-3 text-sm text-slate-900 outline-none" />
+              <button
+                type="button"
+                (click)="togglePasswordVisibility('password')"
+                class="inline-flex items-center justify-center px-4 text-slate-500 transition hover:bg-slate-50 hover:text-slate-900">
+                <i-lucide [name]="showPassword() ? icons.eyeOff : icons.eye" class="size-4" />
+              </button>
             </div>
           </div>
-          } @if (formManager.currentStep() === 2) {
-          <div class="space-y-6">
-            <div class="group">
-              <label for="password" class="block text-sm font-semibold text-slate-700 mb-2">
-                <span class="flex items-center gap-2">
-                  <span
-                    class="shrink-0 w-5 h-5 md:w-7 md:h-7 rounded-md bg-gradient-to-br from-primary-50 to-primary-100/50 border border-primary-200/60 flex items-center justify-center group-focus-within:from-primary-100 group-focus-within:to-primary-200/50 group-focus-within:border-primary-300 transition-all duration-200">
-                    <i-lucide [name]="icons.lock" class="size-3.5 md:size-5 text-primary-600" />
-                  </span>
-                  {{ 'auth.signup.form.password' | translate }}
-                </span>
-              </label>
-              <div class="flex overflow-hidden rounded-lg border border-slate-200 bg-white">
-                <input
-                  id="password"
-                  [type]="showPassword() ? 'text' : 'password'"
-                  formControlName="password"
-                  [placeholder]="'auth.signup.form.passwordPlaceholder' | translate"
-                  class="w-full px-4 py-3 text-sm text-slate-900 outline-none" />
-                <button
-                  type="button"
-                  (click)="togglePasswordVisibility('password')"
-                  class="inline-flex items-center justify-center px-4 text-slate-500 transition hover:bg-slate-50 hover:text-slate-900">
-                  <i-lucide [name]="showPassword() ? icons.eyeOff : icons.eye" class="size-4" />
-                </button>
-              </div>
-            </div>
 
-            <div class="group">
-              <label for="password_confirm" class="block text-sm font-semibold text-slate-700 mb-2">
-                <span class="flex items-center gap-2">
-                  <span
-                    class="shrink-0 w-5 h-5 md:w-7 md:h-7 rounded-md bg-gradient-to-br from-primary-50 to-primary-100/50 border border-primary-200/60 flex items-center justify-center group-focus-within:from-primary-100 group-focus-within:to-primary-200/50 group-focus-within:border-primary-300 transition-all duration-200">
-                    <i-lucide [name]="icons.lock" class="size-3.5 md:size-5 text-primary-600" />
-                  </span>
-                  {{ 'auth.signup.form.passwordConfirm' | translate }}
+          <div class="group">
+            <label for="password_confirm" class="block text-sm font-semibold text-slate-700 mb-2">
+              <span class="flex items-center gap-2">
+                <span
+                  class="shrink-0 w-5 h-5 md:w-7 md:h-7 rounded-md bg-gradient-to-br from-primary-50 to-primary-100/50 border border-primary-200/60 flex items-center justify-center group-focus-within:from-primary-100 group-focus-within:to-primary-200/50 group-focus-within:border-primary-300 transition-all duration-200">
+                  <i-lucide [name]="icons.lock" class="size-3.5 md:size-5 text-primary-600" />
                 </span>
-              </label>
-              <div class="flex overflow-hidden rounded-lg border border-slate-200 bg-white">
-                <input
-                  id="password_confirm"
-                  [type]="showPasswordConfirm() ? 'text' : 'password'"
-                  formControlName="password_confirm"
-                  [placeholder]="'auth.signup.form.passwordConfirmPlaceholder' | translate"
-                  class="w-full px-4 py-3 text-sm text-slate-900 outline-none" />
-                <button
-                  type="button"
-                  (click)="togglePasswordVisibility('passwordConfirm')"
-                  class="inline-flex items-center justify-center px-4 text-slate-500 transition hover:bg-slate-50 hover:text-slate-900">
-                  <i-lucide [name]="showPasswordConfirm() ? icons.eyeOff : icons.eye" class="size-4" />
-                </button>
-              </div>
+                {{ 'auth.signup.form.passwordConfirm' | translate }}
+              </span>
+            </label>
+            <div class="flex overflow-hidden rounded-lg border border-slate-200 bg-white">
+              <input
+                id="password_confirm"
+                [type]="showPasswordConfirm() ? 'text' : 'password'"
+                formControlName="password_confirm"
+                [placeholder]="'auth.signup.form.passwordConfirmPlaceholder' | translate"
+                class="w-full px-4 py-3 text-sm text-slate-900 outline-none" />
+              <button
+                type="button"
+                (click)="togglePasswordVisibility('passwordConfirm')"
+                class="inline-flex items-center justify-center px-4 text-slate-500 transition hover:bg-slate-50 hover:text-slate-900">
+                <i-lucide [name]="showPasswordConfirm() ? icons.eyeOff : icons.eye" class="size-4" />
+              </button>
             </div>
           </div>
-          }
+        </div>
 
-          <ui-button
-            formActions
-            type="submit"
-            [fullWidth]="false"
-            [disabled]="form.invalid || store.isLoading()"
-            [loading]="store.isLoading()"
-            size="lg">
-            <span>{{ 'auth.signup.form.submit' | translate }}</span>
-            <i-lucide [name]="icons.arrowRight" class="size-5" />
-          </ui-button>
-        </app-form-manager>
+        <ui-button
+          class="w-full"
+          type="submit"
+          [fullWidth]="true"
+          [disabled]="form.invalid || store.isLoading()"
+          [loading]="store.isLoading()"
+          size="lg">
+          <span>{{ 'auth.signup.form.submit' | translate }}</span>
+          <i-lucide [name]="icons.arrowRight" class="size-5" />
+        </ui-button>
       </form>
     </div>
   </div>

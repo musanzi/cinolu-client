@@ -4,8 +4,8 @@ import { LucideAngularModule, ThumbsUp, Check, MapPin, Building2, Layers } from 
 import { ApiImgPipe } from '@shared/pipes/api-img.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthStore } from '@core/auth/auth.store';
-import { ParticipationsStore } from '../../../dashboard/store/participations.store';
-import { VoteStore } from '../../../dashboard/store/vote.store';
+import { ParticipationsStore } from '@features/dashboard/shared/store/participations.store';
+import { VoteStore } from '@features/dashboard/shared/store/vote.store';
 import type {
   IProject,
   IProjectParticipationReview,

@@ -1,0 +1,369 @@
+<div>
+  <div class="dashboard-grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="lg:col-span-3">
+      @if (!hasMentorProfile()) {
+      <div
+        class="sm:bg-white sm:rounded-lg sm:shadow-lg sm:border sm:border-gray-100 p-6 sm:p-8 relative overflow-hidden group">
+        <div
+          class="absolute top-0 right-0 w-64 h-64 bg-linear-to-br from-primary-100/50 to-indigo-100/30 rounded-full blur-3xl z-0"></div>
+
+        <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="flex items-center gap-5 flex-1">
+            <div
+              class="w-16 h-16 rounded-xl bg-linear-to-br from-primary-500/90 to-primary-700/85 flex items-center justify-center shadow-lg shrink-0">
+              <i-lucide class="text-white text-3xl" [name]="icons.school" />
+            </div>
+            <div class="text-center md:text-left">
+              <h3 class="dashboard-heading-4 mb-1">
+                Devenez <span class="dashboard-text-gradient-primary">Mentor</span>
+              </h3>
+              <p class="dashboard-text-small max-w-lg">
+                Partagez votre expertise et guidez les entrepreneurs de demain. Rejoignez notre communauté de mentors et
+                faites la différence.
+              </p>
+            </div>
+          </div>
+
+          <button type="button" (click)="applyAsMentor()" class="dashboard-btn-primary shrink-0 whitespace-nowrap">
+            <i-lucide class="text-lg" [name]="icons.rocketLaunch" />
+            <span>Postuler maintenant</span>
+          </button>
+        </div>
+
+        <div class="relative z-10 mt-8 pt-8 border-t border-slate-100">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center shrink-0">
+                <i-lucide class="text-primary-600 text-xl" [name]="icons.users" />
+              </div>
+              <div>
+                <p class="dashboard-text-small font-semibold text-slate-800">Impact</p>
+                <p class="dashboard-text-tiny text-slate-600">Guidez des entrepreneurs</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center shrink-0">
+                <i-lucide class="text-primary-600 text-xl" [name]="icons.star" />
+              </div>
+              <div>
+                <p class="dashboard-text-small font-semibold text-slate-800">Reconnaissance</p>
+                <p class="dashboard-text-tiny text-slate-600">Valorisez votre expertise</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
+                <i-lucide class="text-blue-600 text-xl" [name]="icons.network" />
+              </div>
+              <div>
+                <p class="dashboard-text-small font-semibold text-slate-800">Réseau</p>
+                <p class="dashboard-text-tiny text-slate-600">Élargissez vos connexions</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      } @else {
+      <div class="sm:bg-white sm:rounded-2xl sm:shadow-lg sm:border sm:border-gray-100 p-6 sm:p-8">
+        <div class="flex items-center justify-between flex-wrap gap-4 mb-6 pb-6 border-b border-slate-100">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-12 h-12 rounded-xl bg-linear-to-br from-primary-500/90 to-primary-700/85 flex items-center justify-center shadow-lg">
+              <i-lucide class="text-white text-2xl" [name]="icons.school" />
+            </div>
+            <div>
+              <h3 class="dashboard-heading-5">Statut Mentor</h3>
+              <p class="dashboard-text-tiny">Votre parcours en tant que mentor</p>
+            </div>
+          </div>
+
+          @if (mentorStatus() === 'approved') {
+          <span class="dashboard-badge-success">
+            <i-lucide class="text-sm" [name]="icons.verified" />
+            Approuvé
+          </span>
+          } @else if (mentorStatus() === 'pending') {
+          <span class="dashboard-badge-warning">
+            <i-lucide class="text-sm" [name]="icons.schedule" />
+            En attente
+          </span>
+          } @else if (mentorStatus() === 'rejected') {
+          <span class="dashboard-badge-danger">
+            <i-lucide class="text-sm" [name]="icons.cancel" />
+            Refusé
+          </span>
+          }
+        </div>
+
+        <div class="space-y-4">
+          @if (mentorStatus() === 'approved') {
+          <div class="dashboard-card bg-primary-50 border border-primary-100 p-5">
+            <div class="flex items-start gap-3">
+              <i-lucide class="text-primary-600 text-2xl" [name]="icons.checkCircle" />
+              <div class="flex-1">
+                <h4 class="font-semibold text-primary-900 text-sm mb-2">Félicitations !</h4>
+                <p class="text-primary-700 text-xs leading-relaxed mb-4">
+                  Votre profil de mentor a été approuvé. Vous pouvez maintenant accéder à votre dashboard mentor et
+                  commencer à accompagner des entrepreneurs.
+                </p>
+                <button
+                  type="button"
+                  (click)="goToMentorDashboard()"
+                  class="inline-flex items-center gap-2 px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white text-sm font-medium rounded-lg transition-colors">
+                  <i-lucide class="text-lg" [name]="icons.dashboard" />
+                  <span>Accéder au Dashboard Mentor</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          } @else if (mentorStatus() === 'pending') {
+          <div class="dashboard-card bg-yellow-50 border border-yellow-100 p-5">
+            <div class="flex items-start gap-3">
+              <i-lucide class="text-yellow-600 text-2xl" [name]="icons.schedule" />
+              <div>
+                <h4 class="font-semibold text-yellow-900 text-sm mb-2">Candidature en cours d'examen</h4>
+                <p class="text-yellow-700 text-xs leading-relaxed">
+                  Votre candidature pour devenir mentor est en cours d'examen. Notre équipe vous contactera sous peu
+                  avec une réponse.
+                </p>
+              </div>
+            </div>
+          </div>
+          } @else if (mentorStatus() === 'rejected') {
+          <div class="dashboard-card bg-red-50 border border-red-100 p-5">
+            <div class="flex items-start gap-3">
+              <i-lucide class="text-red-600 text-2xl" [name]="icons.cancel" />
+              <div>
+                <h4 class="font-semibold text-red-900 text-sm mb-2">Candidature refusée</h4>
+                <p class="text-red-700 text-xs leading-relaxed">
+                  Malheureusement, votre candidature n'a pas été retenue pour le moment. Vous pourrez soumettre une
+                  nouvelle candidature après avoir acquis plus d'expérience.
+                </p>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+      }
+    </div>
+
+    <div class="lg:col-span-1">
+      <div class="sm:bg-white sm:rounded-lg sm:shadow-lg sm:border sm:border-gray-100 p-6 sm:p-8 lg:sticky lg:top-30">
+        <h2 class="dashboard-heading-5 mb-6">Photo de profil</h2>
+
+        <div class="flex flex-col items-center">
+          <div class="relative mb-6 group">
+            <div
+              class="absolute -inset-1 bg-linear-to-r from-purple-500 via-pink-500 to-primary-500 rounded-full blur opacity-30 group-hover:opacity-50 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
+            @if (authStore.user()?.profile || authStore.user()?.google_image) {
+            <div class="relative">
+              <img
+                [src]="authStore.user() | apiIMG: 'user'"
+                [alt]="authStore.user()?.name"
+                class="relative w-44 h-44 rounded-full object-cover border-4 border-white shadow-2xl transition-transform group-hover:scale-105 duration-300" />
+            </div>
+            } @else {
+            <div
+              class="relative w-44 h-44 rounded-full bg-linear-to-br from-primary-500 to-primary-700 flex items-center justify-center border-4 border-white shadow-2xl transition-transform group-hover:scale-105 duration-300">
+              <i-lucide class="text-white text-[80px]" [name]="icons.profile" />
+            </div>
+            } @if (authStore.isLoading()) {
+            <div
+              class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm rounded-full flex items-center justify-center">
+              <div class="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+            </div>
+            }
+          </div>
+
+          <div class="w-full space-y-4">
+            <app-file-upload [name]="'profile'" [url]="getUploadUrl()" (loaded)="handleLoaded()" />
+
+            <div class="dashboard-card p-3 text-center">
+              <p class="dashboard-text-tiny flex items-center justify-center gap-1.5">
+                <i-lucide class="text-slate-600 text-sm" [name]="icons.info" />
+                <span>JPG, PNG ou WEBP • Max 1MB</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lg:col-span-2">
+      <div class="sm:bg-white sm:rounded-lg sm:shadow-lg sm:border sm:border-gray-100 sm:p-8">
+        <div class="flex items-center justify-between flex-wrap gap-3 mb-8 pb-6 border-b border-slate-100">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-11 h-11 rounded-xl bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg">
+              <i-lucide class="text-white text-xl" [name]="icons.badge" />
+            </div>
+            <div>
+              <h2 class="dashboard-heading-5">Informations personnelles</h2>
+              <p class="dashboard-text-tiny">Mettez à jour vos coordonnées</p>
+            </div>
+          </div>
+          @if (!isEditing()) {
+          <button type="button" (click)="toggleEdit()" class="dashboard-btn-primary inline-flex max-sm:w-full">
+            <i-lucide class="text-lg" [name]="icons.edit" />
+            <span>Modifier</span>
+          </button>
+          }
+        </div>
+
+        <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="space-y-6">
+          <app-form-manager [form]="profileForm" [loading]="authStore.isLoading()">
+            <div class="dashboard-grid-2">
+              <div class="form-group">
+                <label for="name" class="dashboard-label">
+                  <i-lucide class="text-base text-primary-600" [name]="icons.profile" />
+                  <span>Nom complet <span class="text-red-500">*</span></span>
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  formControlName="name"
+                  [readonly]="!isEditing()"
+                  [class]="isEditing() ? 'dashboard-input' : 'dashboard-input bg-slate-50! border-slate-100! text-slate-600'" />
+              </div>
+
+              <div class="form-group">
+                <label for="email" class="dashboard-label">
+                  <i-lucide class="text-base text-indigo-600" [name]="icons.email" />
+                  <span>Email</span>
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  [value]="authStore.user()?.email"
+                  readonly
+                  class="dashboard-input bg-slate-50! border-slate-100! text-slate-500 cursor-not-allowed" />
+              </div>
+            </div>
+
+            <div class="dashboard-grid-2">
+              <div class="form-group">
+                <label for="phone_number" class="dashboard-label">
+                  <i-lucide class="text-base text-blue-600" [name]="icons.phone" />
+                  <span>Téléphone</span>
+                </label>
+                <input
+                  id="phone_number"
+                  type="tel"
+                  formControlName="phone_number"
+                  [readonly]="!isEditing()"
+                  [class]="isEditing() ? 'dashboard-input' : 'dashboard-input bg-slate-50! border-slate-100! text-slate-600'" />
+              </div>
+
+              <div class="form-group">
+                <label for="gender" class="dashboard-label">
+                  <i-lucide class="text-base text-purple-600" [name]="icons.gender" />
+                  <span>Genre</span>
+                </label>
+                <select
+                  id="gender"
+                  formControlName="gender"
+                  [class]="isEditing() ? 'dashboard-select' : 'dashboard-select bg-slate-50! border-slate-100! text-slate-600 pointer-events-none'">
+                  <option value="">Sélectionner</option>
+                  <option value="male">Homme</option>
+                  <option value="female">Femme</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="dashboard-grid-2">
+              <div class="form-group">
+                <label for="status" class="dashboard-label">
+                  <i-lucide class="text-base text-orange-600" [name]="icons.badge" />
+                  <span>Statut</span>
+                </label>
+                <ui-select
+                  [inputId]="'status'"
+                  formControlName="status"
+                  [options]="statusOptions"
+                  [placeholder]="'Sélectionner un statut'"
+                  [disabled]="!isEditing()" />
+              </div>
+            </div>
+
+            <div class="dashboard-grid-2">
+              <div class="form-group">
+                <label for="city" class="dashboard-label">
+                  <i-lucide class="text-base text-teal-600" [name]="icons.city" />
+                  <span>Ville</span>
+                </label>
+                <input
+                  id="city"
+                  type="text"
+                  formControlName="city"
+                  [readonly]="!isEditing()"
+                  [class]="isEditing() ? 'dashboard-input' : 'dashboard-input bg-slate-50! border-slate-100! text-slate-600'" />
+              </div>
+
+              <div class="form-group">
+                <label for="country" class="dashboard-label">
+                  <i-lucide class="text-base text-emerald-600" [name]="icons.country" />
+                  <span>Pays</span>
+                </label>
+                <input
+                  id="country"
+                  type="text"
+                  formControlName="country"
+                  [readonly]="!isEditing()"
+                  [class]="isEditing() ? 'dashboard-input' : 'dashboard-input bg-slate-50! border-slate-100! text-slate-600'" />
+              </div>
+            </div>
+
+            <div>
+              <label for="birth_date" class="dashboard-label">
+                <i-lucide class="text-base text-pink-600" [name]="icons.birthDate" />
+                <span>Date de naissance</span>
+              </label>
+              <input
+                id="birth_date"
+                type="date"
+                formControlName="birth_date"
+                placeholder="Sélectionner une date"
+                [readonly]="!isEditing()"
+                [class]="isEditing() ? 'dashboard-input' : 'dashboard-input bg-slate-50! border-slate-100! text-slate-600'" />
+            </div>
+
+            <div>
+              <label for="biography" class="dashboard-label">
+                <i-lucide class="text-base text-amber-600" [name]="icons.description" />
+                <span>Biographie</span>
+              </label>
+              <textarea
+                id="biography"
+                formControlName="biography"
+                [readonly]="!isEditing()"
+                [class]="isEditing() ? 'dashboard-textarea' : 'dashboard-textarea bg-slate-50! border-slate-100! text-slate-600'"
+                placeholder="Parlez-nous de vous..."></textarea>
+            </div>
+
+            @if (isEditing()) {
+            <div class="flex flex-col-reverse sm:flex-row gap-3 justify-end pt-8 border-t border-slate-100">
+              <button formActions type="button" (click)="cancelEdit()" class="dashboard-btn-secondary">
+                <i-lucide class="text-lg" [name]="icons.close" />
+                <span>Annuler</span>
+              </button>
+              <button
+                formActions
+                type="submit"
+                [disabled]="profileForm.invalid || authStore.isLoading()"
+                class="dashboard-btn-primary">
+                @if (authStore.isLoading()) {
+                <div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <span>Enregistrement...</span>
+                } @else {
+                <i-lucide class="text-lg" [name]="icons.save" />
+                <span>Enregistrer les modifications</span>
+                }
+              </button>
+            </div>
+            }
+          </app-form-manager>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

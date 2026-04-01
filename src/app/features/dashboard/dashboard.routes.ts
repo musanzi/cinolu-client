@@ -5,14 +5,15 @@ export const dashboardRoutes: Routes = [
   {
     path: '',
     canActivate: [dashboardLandingGuard],
-    loadComponent: () => import('./components/dashboard-landing/dashboard-landing').then((c) => c.DashboardLanding)
+    loadComponent: () =>
+      import('./shared/components/dashboard-landing/dashboard-landing').then((c) => c.DashboardLanding)
   },
   {
     path: 'user',
-    loadChildren: () => import('../dashboard-user/dashboard-user.routes').then((m) => m.dashboardUserRoutes)
+    loadChildren: () => import('./user/dashboard-user.routes').then((m) => m.dashboardUserRoutes)
   },
   {
     path: 'mentor',
-    loadChildren: () => import('../dashboard-mentor/dashboard-mentor.routes').then((m) => m.dashboardMentorRoutes)
+    loadChildren: () => import('./mentor/dashboard-mentor.routes').then((m) => m.dashboardMentorRoutes)
   }
 ];

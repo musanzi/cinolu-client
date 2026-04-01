@@ -1,8 +1,7 @@
 <app-auth-card [title]="'auth.signin.title' | translate" [description]="'auth.signin.description' | translate">
   <div
     class="relative md:bg-white rounded-lg md:shadow-md md:shadow-slate-900/5 md:border border-slate-200/50 overflow-hidden">
-    <div class="h-2 bg-gradient-to-r from-primary-500 via-primary-600 to-primary-700"></div>
-
+    <div class="h-2 bg-linear-to-r from-primary-500 via-primary-600 to-primary-700"></div>
     <div class="py-8 md:px-10">
       <div class="mb-8">
         <p class="text-sm text-slate-600">
@@ -64,13 +63,11 @@
               <span>{{ 'auth.signin.form.submit' | translate }}</span>
             </span>
           </ui-button>
-
           <div class="flex items-center">
             <div class="flex-auto border-t border-slate-200"></div>
-            <div class="text-sm text-slate-600 mx-4">{{ 'auth.signin.orContinueWith' | translate }}</div>
+            <div class="text-sm text-slate-600 mx-4 my-4">{{ 'auth.signin.orContinueWith' | translate }}</div>
             <div class="flex-auto border-t border-slate-200"></div>
           </div>
-
           <ui-button [fullWidth]="true" variant="secondary" type="button" (click)="signinWithGoogle()">
             <div class="relative h-5 w-5">
               <img ngSrc="/images/google.svg" alt="Google" fill />

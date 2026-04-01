@@ -26,7 +26,7 @@ export const CONTACT_ITEMS: IContact[] = [
     children: [
       {
         label: 'Support client',
-        value: 'info@cinolu.org '
+        value: 'reception@cinolu.org '
       }
     ]
   },

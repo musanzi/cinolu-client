@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from '../../../core/services/toast/toastr.service';
 import { IUser } from '../../../shared/models/entities.models';
 import { SignUpDto } from '../dto/sign-up.dto';
+import { AuthStore } from '@core/auth/auth.store';
 
 interface ISignUpStore {
   isLoading: boolean;
@@ -18,18 +19,20 @@ export const SignUpStore = signalStore(
   withProps(() => ({
     _http: inject(HttpClient),
     _toast: inject(ToastrService),
-    _router: inject(Router)
+    _router: inject(Router),
+    _authStore: inject(AuthStore)
   })),
-  withMethods(({ _http, _toast, _router, ...store }) => ({
+  withMethods(({ _http, _toast, _router, _authStore, ...store }) => ({
     signUp: rxMethod<SignUpDto>(
       pipe(
         tap(() => patchState(store, { isLoading: true })),
         switchMap((payload) => {
           return _http.post<{ data: IUser }>('auth/signup', payload).pipe(
-            tap(() => {
-              patchState(store, { isLoading: false });
+            tap(({ data }) => {
+              patchState(store, { isLoading: false, user: data });
+              _authStore.setUser(data);
               _toast.showSuccess('Inscription réussie');
-              _router.navigate(['/sign-in']);
+              _router.navigate(['/dashboard/user/profile']);
             }),
             catchError((err) => {
               patchState(store, { isLoading: false });
