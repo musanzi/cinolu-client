@@ -21,13 +21,16 @@
     </div>
     }
     <div class="space-y-6 lg:space-y-8 mt-8 lg:mt-12">
-      <div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
-        @for (project of store.projects(); track trackByProjectId($index, project)) {
-        <div class="carousel-item-wrapper">
-          <app-project-card [project]="project" [buttonTextKey]="'recent_projects.explore'" />
-        </div>
-        }
-      </div>
+      <app-cards-carousel
+        [items]="store.projects()"
+        [trackBy]="trackByProjectId"
+        [itemTemplate]="projectSlide"
+        ariaLabel="Programmes recents">
+      </app-cards-carousel>
+
+      <ng-template #projectSlide let-project>
+        <app-project-card class="block h-full" [project]="project" [buttonTextKey]="'recent_projects.explore'" />
+      </ng-template>
 
       <div class="w-full flex justify-center items-center mt-12">
         <a routerLink="/programs" class="group relative">
