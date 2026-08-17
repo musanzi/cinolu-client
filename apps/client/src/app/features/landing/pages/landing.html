@@ -4,33 +4,34 @@
   <app-onestop />
   <app-services />
   @defer (on viewport) {
-  <app-sectors />
+    <app-sectors />
   } @placeholder {
-  <div class="h-96 bg-white" aria-hidden="true"></div>
-  } @defer (on viewport) {
-  <app-programs />
+    <div class="h-96 bg-white" aria-hidden="true"></div>
+  }
+  @defer (on viewport) {
+    <app-programs />
   } @placeholder {
-  <div class="h-96 bg-gray-50" aria-hidden="true"></div>
-  } @defer (on viewport) {
-  <!-- <app-testimonials /> -->
+    <div class="h-96 bg-gray-50" aria-hidden="true"></div>
+  }
+  @defer (on viewport) {
+    <!-- <app-testimonials /> -->
   } @placeholder {
-  <div class="h-64 bg-white" aria-hidden="true"></div>
-  } @defer (on viewport) {
-  <app-recent-projects />
+    <div class="h-64 bg-white" aria-hidden="true"></div>
+  }
+  @defer (on viewport) {
+    <app-recent-projects />
   } @placeholder {
-  <div class="h-96 bg-white" aria-hidden="true"></div>
-  } @defer (on viewport) {
-  <app-recent-events />
+    <div class="h-96 bg-white" aria-hidden="true"></div>
+  }
+  @defer (on viewport) {
+    <app-recent-events />
   } @placeholder {
-  <div class="h-96 bg-gray-50" aria-hidden="true"></div>
-  } @defer (on viewport) {
-  <app-recent-opportunities />
+    <div class="h-96 bg-gray-50" aria-hidden="true"></div>
+  }
+  @defer (on viewport) {
+    <app-networks />
+    <app-partners />
   } @placeholder {
-  <div class="h-96 bg-white" aria-hidden="true"></div>
-  } @defer (on viewport) {
-  <app-networks />
-  <app-partners />
-  } @placeholder {
-  <div class="h-96 bg-gray-50" aria-hidden="true"></div>
+    <div class="h-96 bg-gray-50" aria-hidden="true"></div>
   }
 </div>
