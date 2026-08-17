@@ -153,11 +153,11 @@
                   class="block px-7 py-3.5 pl-12 leading-[1.2] text-gray-700 transition-all duration-200 hover:bg-primary-50 hover:text-primary-700">
                   <span class="text-sm font-semibold">{{ translateField()(p.name, 'name', p) }}</span>
                   <span class="mt-1 block text-xs text-gray-500">
-                    {{ translateField()(p?.category.name, 'name', p.category) }}
+                    {{ translateField()(p.category?.name, 'name', p.category) }}
                   </span>
                   <span class="mt-1 block text-[10px] uppercase text-primary-500">Secteur</span>
                   <span class="block text-xs text-gray-500">
-                    {{ translateField()(p?.sector.name, 'name', p.sector) }}
+                    {{ translateField()(p.sector?.name, 'name', p.sector) }}
                   </span>
                 </a>
               } @empty {

@@ -104,12 +104,12 @@
                   <span class="text-gray-900">{{ translateField()(p.name, 'name', p) }}</span>
                   <span
                     class="shrink-0 rounded-full bg-primary-50 px-2 py-1 text-[10px] font-semibold uppercase leading-none text-primary-600">
-                    {{ translateField()(p?.category.name, 'name', p.category) }}
+                    {{ translateField()(p.category?.name, 'name', p.category) }}
                   </span>
                 </div>
                 <span class="mt-1 block text-[11px] uppercase text-primary-500">Secteur</span>
                 <span class="block text-sm font-normal text-gray-500">
-                  {{ translateField()(p?.sector.name, 'name', p.sector) }}
+                  {{ translateField()(p.sector?.name, 'name', p.sector) }}
                 </span>
               </a>
             } @empty {

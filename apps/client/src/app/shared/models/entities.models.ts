@@ -165,8 +165,8 @@ export interface IProgram extends IBase {
   is_published: boolean;
   is_highlighted: boolean;
   subprograms: ISubprogram[];
-  category: ICategory;
-  sector: IProgramSector;
+  category: ICategory | null;
+  sector: IProgramSector | null;
 }
 
 export interface ISubprogram extends IBase {
