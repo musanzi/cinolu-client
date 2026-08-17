@@ -55,7 +55,7 @@ pnpm nx serve admin
 A dev Compose file mounts the repo into containers and runs both apps via the Nx dev servers:
 
 ```sh
-docker compose -f compose.dev.yml up
+docker compose -f compose.dev.yml -p onestop-web up
 ```
 
 `client` is served on `4000` and `admin` on `4100`.
@@ -86,7 +86,7 @@ pnpm ssr:admin
 The `Dockerfile` is a multi-stage build (`base` -> `dependencies` -> `development`/`build` -> `production`) that installs dependencies, runs `pnpm build`, and prunes to production dependencies. `compose.prod.yml` builds the `production` target and serves both apps' SSR output:
 
 ```sh
-docker compose -f compose.prod.yml up -d
+docker compose -f compose.prod.yml -p onestop-web up -d
 ```
 
 ## CI/CD
