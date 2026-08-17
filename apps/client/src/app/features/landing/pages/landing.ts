@@ -9,7 +9,7 @@ import { Sectors } from '../components/sectors/sectors';
 import { Onestop } from '../components/onestop/onestop';
 import { Services } from '../components/services/services';
 import { Hero } from '../components/hero/hero';
-import { RecentOpportunities } from '../components/recent-opportunities/recent-opportunities';
+// import { RecentOpportunities } from '../components/recent-opportunities/recent-opportunities';
 // import { TopAmbassadors } from '../components/top-ambassadors/top-ambassadors';
 
 @Component({
@@ -17,7 +17,7 @@ import { RecentOpportunities } from '../components/recent-opportunities/recent-o
   imports: [
     RecentProjects,
     RecentEvents,
-    RecentOpportunities,
+    // RecentOpportunities,
     Networks,
     Partners,
     WhyJoinUs,
