@@ -1,37 +1,12 @@
 <div class="public-page-flow relative">
   <app-hero />
+  <app-programs />
+  <app-recent-projects />
+  <app-recent-events />
   <app-why-join-us />
-  <app-onestop />
+  <!-- <app-onestop /> -->
   <app-services />
-  @defer (on viewport) {
-    <app-sectors />
-  } @placeholder {
-    <div class="h-96 bg-white" aria-hidden="true"></div>
-  }
-  @defer (on viewport) {
-    <app-programs />
-  } @placeholder {
-    <div class="h-96 bg-gray-50" aria-hidden="true"></div>
-  }
-  @defer (on viewport) {
-    <!-- <app-testimonials /> -->
-  } @placeholder {
-    <div class="h-64 bg-white" aria-hidden="true"></div>
-  }
-  @defer (on viewport) {
-    <app-recent-projects />
-  } @placeholder {
-    <div class="h-96 bg-white" aria-hidden="true"></div>
-  }
-  @defer (on viewport) {
-    <app-recent-events />
-  } @placeholder {
-    <div class="h-96 bg-gray-50" aria-hidden="true"></div>
-  }
-  @defer (on viewport) {
-    <app-networks />
-    <app-partners />
-  } @placeholder {
-    <div class="h-96 bg-gray-50" aria-hidden="true"></div>
-  }
+  <app-sectors />
+  <app-networks />
+  <app-partners />
 </div>

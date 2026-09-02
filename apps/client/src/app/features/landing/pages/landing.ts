@@ -6,7 +6,7 @@ import { RecentProjects } from '../components/recent-projects/recent-projects';
 import { WhyJoinUs } from '../components/why-join-us/why-join-us';
 import { Programs } from '../components/programs/programs';
 import { Sectors } from '../components/sectors/sectors';
-import { Onestop } from '../components/onestop/onestop';
+// import { Onestop } from '../components/onestop/onestop';
 import { Services } from '../components/services/services';
 import { Hero } from '../components/hero/hero';
 // import { RecentOpportunities } from '../components/recent-opportunities/recent-opportunities';
@@ -23,7 +23,7 @@ import { Hero } from '../components/hero/hero';
     WhyJoinUs,
     Programs,
     Sectors,
-    Onestop,
+    // Onestop,
     Services,
     Hero
   ],
